@@ -2,8 +2,6 @@ import React from "react";
 import s from "./footer.module.css"
 
 const Footer = (props) => {
-
-
   const itemsLeft = props.itemLeft();
 
   const drawAllComplete = () => {
@@ -24,7 +22,6 @@ const Footer = (props) => {
           <li><a href={"/#/completed"} onClick={() => props.changeFilter("#/completed")}>Completed</a></li>
         </ul>
         {drawAllComplete()}
-
       </div>
   )
 }

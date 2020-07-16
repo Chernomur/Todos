@@ -7,7 +7,6 @@ const InputLine = (props) => {
   const addText = (e) => {
     const text = inputText.current.value;
     if (e.key === "Enter" && text !== "") {
-
       props.addTodo(text)
       inputText.current.value = '';
     }
@@ -21,7 +20,6 @@ const InputLine = (props) => {
                onKeyDown={addText}
                ref={inputText}
         />
-
       </div>
   )
 }

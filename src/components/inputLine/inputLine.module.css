@@ -1,7 +1,8 @@
-::placeholder{
+::placeholder {
   color: #e6e6e6;
-  font-style: italic ;
+  font-style: italic;
 }
+
 .headerInput {
   display: inline-block;
   background-color: #fefefe;
@@ -26,7 +27,8 @@
   width: 8%;
   height: 90%;
 }
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .headerInput {
     display: inline-block;
     background-color: #fefefe;

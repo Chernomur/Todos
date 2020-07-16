@@ -5,9 +5,11 @@
   align-items: center;
 
 }
-input:focus{
+
+input:focus {
   outline: none;
 }
+
 .logo {
   margin: 30px;
   font-size: 100px;

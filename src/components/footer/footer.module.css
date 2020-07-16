@@ -1,17 +1,10 @@
 .footer {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-
   align-items: center;
   background-color: #fefefe;
   width: 550px;
-
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-
-.itemsLeft {
-
 }
 
 .clearComplete {
@@ -26,7 +19,6 @@
 }
 
 .filter {
-
   margin: 10px;
   padding: 0px;
 }
@@ -42,7 +34,6 @@
     align-items: center;
     background-color: #fefefe;
     width: 100%;
-
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   }
 
@@ -53,6 +44,7 @@
   .clearComplete {
     grid-area: clearComplete;
   }
+
   .filter {
     grid-area: filter;
   }

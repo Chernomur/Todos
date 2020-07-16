@@ -3,7 +3,6 @@ import React from "react";
 
 
 const ListItem = (props) => {
-
   const inputText = React.createRef();
   const updateText = () => {
     const text = inputText.current.value;
@@ -18,7 +17,7 @@ const ListItem = (props) => {
                className={s.todo}
                value={props.text}
                ref={inputText}/>
-        <button className={s.deleteTodo} onClick={()=> props.deleteItem(props.id)}>✕</button>
+        <button className={s.deleteTodo} onClick={() => props.deleteItem(props.id)}>✕</button>
       </div>
   )
 }

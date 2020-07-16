@@ -3,9 +3,6 @@ import s from "./todoList.module.css"
 import ListItem from "./listItem/listItem";
 
 const TodoList = (props) => {
-
-
-
   return (
       <div className={s.todoList}>
         <ul>
