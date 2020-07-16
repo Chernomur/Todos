@@ -1,6 +1,5 @@
 import React from "react";
 import s from "./inputLine.module.css"
-import TodoList from "../todoList/todoList";
 
 const InputLine = (props) => {
 

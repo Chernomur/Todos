@@ -11,14 +11,14 @@ const ListItem = (props) => {
   }
 
   return (<div className={s.listItem}>
-        <input onClick={() => props.updateCheckBox(props.id)} type="checkbox"
+        <input onChange={() => props.updateCheckBox(props.id)} type="checkbox"
                className={s.check}
                checked={props.check}/>
         <input onChange={updateText}
                className={s.todo}
                value={props.text}
                ref={inputText}/>
-        <button onClick={()=> props.deleteItem(props.id)}>✕</button>
+        <button className={s.deleteTodo} onClick={()=> props.deleteItem(props.id)}>✕</button>
       </div>
   )
 }

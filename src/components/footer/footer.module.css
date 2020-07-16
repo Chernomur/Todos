@@ -10,22 +10,50 @@
 }
 
 
-.itemsLeft{
+.itemsLeft {
 
 }
 
-.clearComplete{
-   outline: none;
+.clearComplete {
+  outline: none;
   border: 0;
   background: transparent;
 }
-.filter li{
+
+.filter li {
   margin: 10px;
   display: inline;
 }
+
 .filter {
+
   margin: 10px;
   padding: 0px;
 }
 
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "itemsLeft clearComplete"
+        "filter filter";
+    align-items: center;
+    background-color: #fefefe;
+    width: 100%;
 
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .itemsLeft {
+    grid-area: itemsLeft;
+  }
+
+  .clearComplete {
+    grid-area: clearComplete;
+  }
+  .filter {
+    grid-area: filter;
+  }
+}

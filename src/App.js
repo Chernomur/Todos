@@ -31,12 +31,13 @@ class App extends React.Component {
           text: "todo4",
         }
       ],
-      filter: "all",
+      filter: "#/",
     }
   }
 
   inLocalStore = () => {
     localStorage.setItem("todoData", JSON.stringify(this.state.todoData));
+    localStorage.setItem("filter", JSON.stringify(this.state.filter));
   }
 
   checkAll = () => {
@@ -102,24 +103,26 @@ class App extends React.Component {
     return todoData;
   }
   changeFilter = (filter) => {
-    this.setState({filter: filter})
+    this.setState({filter: filter}, this.inLocalStore)
   }
 
   filterTodo = () => {
-    if (this.state.filter === "all") {
+    if (this.state.filter === "#/") {
       return this.state.todoData;
     }
-    if (this.state.filter === "active") {
+    if (this.state.filter === "#/active") {
       const activeTodo = this.state.todoData.filter(item => item.check === false);
       return activeTodo;
     }
-    if (this.state.filter === "completed") {
+    if (this.state.filter === "#/completed") {
       const completedTodo = this.state.todoData.filter(item => item.check === true);
       return completedTodo;
     }
   }
 
   componentDidMount() {
+    const localFilter = window.location.hash
+      this.setState({filter: localFilter});
     const localData = JSON.parse(localStorage.getItem('todoData'));
       this.setState({todoData: localData});
   }

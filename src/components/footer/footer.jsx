@@ -19,9 +19,9 @@ const Footer = (props) => {
       <div className={s.footer}>
         <span className={s.itemsLeft}>{itemsLeft} items left</span>
         <ul className={s.filter}>
-          <li><a href={"/#/"} onClick={() => props.changeFilter("all")}>All</a></li>
-          <li><a href={"/#/active"} onClick={() => props.changeFilter("active")}>Active</a></li>
-          <li><a href={"/#/completed"} onClick={() => props.changeFilter("completed")}>Completed</a></li>
+          <li><a href={"/#/"} onClick={() => props.changeFilter("#/")}>All</a></li>
+          <li><a href={"/#/active"} onClick={() => props.changeFilter("#/active")}>Active</a></li>
+          <li><a href={"/#/completed"} onClick={() => props.changeFilter("#/completed")}>Completed</a></li>
         </ul>
         {drawAllComplete()}
 
