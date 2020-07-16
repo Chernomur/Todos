@@ -98,7 +98,9 @@ class App extends React.Component {
 
   componentDidMount() {
     const localFilter = window.location.hash
-    this.setState({filter: localFilter});
+    if (localFilter) {
+      this.setState({filter: localFilter});
+    }
     const localData = JSON.parse(localStorage.getItem('todoData'));
     if (localData) {
       this.setState({todoData: localData});
