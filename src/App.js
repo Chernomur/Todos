@@ -22,7 +22,8 @@ class App extends React.Component {
   checkAll = () => {
     let bul = true;
     this.state.todoData.find(item => {
-      return (item.check === false)}) ? bul = true : bul = false;
+      return (item.check === false)
+    }) ? bul = true : bul = false;
     const todoData = this.state.todoData.map(item => {
       item.check = bul;
       return item;
@@ -99,27 +100,34 @@ class App extends React.Component {
     const localFilter = window.location.hash
     this.setState({filter: localFilter});
     const localData = JSON.parse(localStorage.getItem('todoData'));
-    this.setState({todoData: localData});
+    if (localData) {
+      this.setState({todoData: localData});
+    }
+
   }
 
   render() {
     return (
         <div className={s.App}>
           <h1 className={s.logo}>todos</h1>
-          <InputLine className={s.inputLine}
-                     addTodo={this.addTodo}
-                     checkAll={this.checkAll}
+          <InputLine
+              todolist={this.state.todoData}
+              className={s.inputLine}
+              addTodo={this.addTodo}
+              checkAll={this.checkAll}
           />
-          <TodoList todolist={this.state.todoData}
-                    updateCheckBox={this.updateCheckBox}
-                    updateTodo={this.updateTodo}
-                    deleteItem={this.deleteItem}
-                    filterTodo={this.filterTodo}
+          <TodoList
+              todolist={this.state.todoData}
+              updateCheckBox={this.updateCheckBox}
+              updateTodo={this.updateTodo}
+              deleteItem={this.deleteItem}
+              filterTodo={this.filterTodo}
           />
-          <Footer itemLeft={this.itemLeft}
-                  deleteCompleted={this.deleteCompleted}
-                  anyCompleted={this.anyCompleted}
-                  changeFilter={this.changeFilter}
+          <Footer
+              itemLeft={this.itemLeft}
+              deleteCompleted={this.deleteCompleted}
+              anyCompleted={this.anyCompleted}
+              changeFilter={this.changeFilter}
           />
         </div>
     );

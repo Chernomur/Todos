@@ -15,7 +15,7 @@ const InputLine = (props) => {
 
   return (
       <div className={s.headerInput}>
-        <button className={s.checkAll} onClick={props.checkAll}>⌵</button>
+        {props.todolist.length > 0 ? <input type="checkbox" className={s.checkAll} onChange={props.checkAll}/> : ""}
         <input id="new-todo" className={s.newTodo} placeholder="What needs to be done?" autoFocus=""
                onKeyDown={addText}
                ref={inputText}
