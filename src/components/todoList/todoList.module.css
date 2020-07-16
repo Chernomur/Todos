@@ -1,0 +1,15 @@
+.todoList {
+  display: flex;
+  background-color: #fefefe;
+  width: 550px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.todoList ul {
+  margin: 0;
+  padding: 0;
+}
+
+.todoList li {
+  list-style-type: none;
+}
