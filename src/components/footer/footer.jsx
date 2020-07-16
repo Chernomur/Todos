@@ -1,28 +1,63 @@
 import React from "react";
-import s from "./footer.module.css"
+
+import style from "./footer.module.css"
+
+const FooterItem = ({ title, value, onClick }) => {
+  return (
+    <li>
+      <a
+        href={value}
+        onClick={() => onClick(value)}
+      >
+        {title}
+      </a>
+    </li>
+  );
+};
 
 const Footer = (props) => {
   const itemsLeft = props.itemLeft();
 
-  const drawAllComplete = () => {
-    const completed = props.anyCompleted();
-    if (completed.length > 0) {
-      return <button className={s.clearComplete} onClick={props.deleteCompleted}>
-        clear completed [{completed.length}]
-      </button>
-    }
-  }
+  const completed = props.anyCompleted();
 
   return (
-      <div className={s.footer}>
-        <span className={s.itemsLeft}>{itemsLeft} items left</span>
-        <ul className={s.filter}>
-          <li><a href={"/#/"} onClick={() => props.changeFilter("#/")}>All</a></li>
-          <li><a href={"/#/active"} onClick={() => props.changeFilter("#/active")}>Active</a></li>
-          <li><a href={"/#/completed"} onClick={() => props.changeFilter("#/completed")}>Completed</a></li>
-        </ul>
-        {drawAllComplete()}
-      </div>
-  )
-}
+    <div className={style.footer}>
+      <span className={style.itemsLeft}>
+        {itemsLeft} items left
+      </span>
+
+      <ul className={style.filter}>
+        <FooterItem value="#all" title="All" onClick={props.changeFilter} />
+
+        <li>
+          <a
+            href={"#allactive"}
+            onClick={() => props.changeFilter("#allactive")}
+          >
+            Active
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="#allcompleted"
+            onClick={() => props.changeFilter("#allcompleted")}
+          >
+            Completed
+          </a>
+        </li>
+      </ul>
+
+      {completed.length > 0 && (
+        <button
+          className={style.clearComplete}
+          onClick={props.deleteCompleted}
+        >
+          clear completed [{completed.length}]
+        </button>
+      )}
+    </div>
+  );
+};
+
 export default Footer;
