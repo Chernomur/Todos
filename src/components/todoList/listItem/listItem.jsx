@@ -1,39 +1,111 @@
 import React from "react";
 
+import PropTypes from "prop-types";
 import style from "./ListItem.module.css";
 
-const ListItem = (props) => {
-  const inputText = React.createRef();
-
-  const updateText = () => {
-    const text = inputText.current.value;
-    props.updateTodo(props.id, text)
+class ListItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      oldText: this.props.text,
+      showInput: false
+    };
   }
 
-  return (
-    <div className={style.listItem}>
-      <input
-        onChange={() => props.updateCheckBox(props.id)}
-        type="checkbox"
-        className={style.check}
-        checked={props.check}
-      />
+  saveText = (id) => {
+    this.props.updateTodo(id, this.state.oldText);
+  }
 
-      <input
-        onChange={updateText}
-        className={style.todo}
-        value={props.text}
-        ref={inputText}
-      />
+  toShowInput = (show) => {
+    const copy = { ...this.state };
+    copy.showInput = show;
+    this.setState(copy);
+  }
 
-      <button
-        className={style.deleteTodo}
-        onClick={() => props.deleteItem(props.id)}
+  updateText = (event) => {
+    const text = event.target.value;
+    const copyState = { ...this.state, oldText: text };
+    this.setState({ oldText: copyState.oldText });
+  }
+
+  inputConfirmation = (e) => {
+    if (e.key === "Enter") {
+      this.saveText(this.props.id);
+      this.toShowInput(false);
+    }
+    if (e.key === "Escape") {
+      this.toShowInput(false);
+      this.setState({ oldText: this.props.text });
+    }
+  }
+
+  handleClickOutside = (e) => {
+    const clickedElem = document.getElementById(this.props.id);
+    if (!e.path.includes(clickedElem)) {
+      this.toShowInput(false);
+      this.setState({ oldText: this.props.text });
+    }
+  }
+
+  componentDidMount() {
+    document.addEventListener("click", this.handleClickOutside, false);
+  }
+
+  render() {
+    return (
+      <li
+        id={this.props.id}
+        className={style.listItem}
+        onDoubleClick={() => {
+          this.toShowInput(true);
+        }}
       >
-        ✕
-      </button>
-    </div>
-  );
+        {this.state.showInput ?
+          <input
+            autoFocus
+            onKeyDown={this.inputConfirmation}
+            onChange={this.updateText}
+            className={style.todoInput}
+            value={this.state.oldText}
+          />
+          : <div className={style.taskContainer}>
+            <input
+              onChange={() => this.props.updateCheckBox(this.props.id)}
+              type="checkbox"
+              className={style.check}
+              checked={this.props.check}
+            />
+            <div
+              className={this.props.check ? style.todoCheck : style.todo}>{this.props.text}
+            </div>
+            <button
+              className={style.deleteTodo}
+              onClick={() => this.props.deleteItem(this.props.id)}
+            >
+              ✕
+            </button>
+          </div>
+        }
+      </li>
+    );
+  }
+}
+
+ListItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  text: PropTypes.string,
+  check: PropTypes.bool,
+  updateTodo: PropTypes.func,
+  updateCheckBox: PropTypes.func,
+  deleteItem: PropTypes.func
+};
+
+ListItem.defaultProps = {
+  text: " ",
+  check: false,
+  updateTodo: () => null,
+  updateCheckBox: () => null,
+  deleteItem: () => null
 };
 
 export default ListItem;

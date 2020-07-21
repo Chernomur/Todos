@@ -1,0 +1,27 @@
+.filterButton a {
+  color: black;
+  text-decoration: none;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 10px;
+  border: 1px solid whitesmoke;
+}
+
+.filterButtonOn {
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid lightgray;
+  margin: 5px;
+  background-color: #f5f5f5;
+
+}
+.filterButtonOn a {
+  color: black;
+  text-decoration: none;
+}
+
+
+.filterButton :hover{
+  border-radius: 10px;
+  border: 1px solid black;
+}

@@ -29,7 +29,7 @@ module.exports = {
     'react/no-unused-state': 2,
     'react/require-default-props': 2,
     'react/default-props-match-prop-types': 2,
-    'react/no-access-state-in-setstate': 2,
+/*    'react/no-access-state-in-setstate': 2,*/
     'react/no-direct-mutation-state': 2,
     'styled-components-config/rule-name': 2,
     'eol-last': ['error', 'always'],
@@ -42,6 +42,7 @@ module.exports = {
     'arrow-parens': ['error', 'always'],
     'arrow-body-style': 'off',
     'object-curly-newline': 'off',
+    'object-curly-spacing': 'off',
     'no-use-before-define': 'off',
     'no-shadow': 'off',
     'space-before-function-paren': 'off',

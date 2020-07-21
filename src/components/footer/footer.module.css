@@ -14,12 +14,11 @@
 }
 
 .filter li {
-  margin: 10px;
   display: inline;
 }
 
 .filter {
-  margin: 10px;
+  margin-left: 0px;
   padding: 0px;
 }
 

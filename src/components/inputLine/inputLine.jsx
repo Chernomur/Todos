@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import style from "./inputLine.module.css"
 import { TaskType } from "utils/types";
+import style from "./inputLine.module.css";
 
 const InputLine = (props) => {
   const inputText = React.createRef();
@@ -10,8 +10,8 @@ const InputLine = (props) => {
   const addText = (e) => {
     const text = inputText.current.value;
     if (e.key === "Enter" && text !== "") {
-      props.addTodo(text)
-      inputText.current.value = '';
+      props.addTodo(text);
+      inputText.current.value = "";
     }
   };
 
@@ -22,6 +22,7 @@ const InputLine = (props) => {
           type="checkbox"
           className={style.checkAll}
           onChange={props.checkAll}
+          checked={props.activeCounter === 0}
         />
       )}
 
@@ -37,26 +38,18 @@ const InputLine = (props) => {
   );
 };
 
-// PropTypes.string
-// PropTypes.number
-// PropTypes.bool
-// PropTypes.func
-// PropTypes.node
-// PropTypes.arrayOf(PropTypes.string)
-// PropTypes.shape({
-//   id: PropTypes.string
-// })
-// PropTypes.oneOf(['start', 'end'])
-// PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-
 InputLine.propTypes = {
+  activeCounter: PropTypes.number,
   todolist: PropTypes.arrayOf(TaskType),
-  addTodo: PropTypes.func
-}
+  addTodo: PropTypes.func,
+  checkAll: PropTypes.func
+};
 
 InputLine.defaultProps = {
+  activeCounter: 0,
   todolist: [],
-  addTodo: () => null
+  addTodo: () => null,
+  checkAll: () => null
 };
 
 export default InputLine;

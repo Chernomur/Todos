@@ -1,63 +1,64 @@
 import React from "react";
 
-import style from "./footer.module.css"
+import PropTypes from "prop-types";
+import FooterItem from "./footerItem/footerItem.jsx";
 
-const FooterItem = ({ title, value, onClick }) => {
-  return (
-    <li>
-      <a
-        href={value}
-        onClick={() => onClick(value)}
-      >
-        {title}
-      </a>
-    </li>
-  );
-};
+import style from "./footer.module.css";
 
 const Footer = (props) => {
-  const itemsLeft = props.itemLeft();
-
-  const completed = props.anyCompleted();
-
   return (
     <div className={style.footer}>
       <span className={style.itemsLeft}>
-        {itemsLeft} items left
+      {props.activeCounter === 1 ? `${props.activeCounter} item left` : `${props.activeCounter} items left`}
       </span>
 
       <ul className={style.filter}>
-        <FooterItem value="#all" title="All" onClick={props.changeFilter} />
-
-        <li>
-          <a
-            href={"#allactive"}
-            onClick={() => props.changeFilter("#allactive")}
-          >
-            Active
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="#allcompleted"
-            onClick={() => props.changeFilter("#allcompleted")}
-          >
-            Completed
-          </a>
-        </li>
+        <FooterItem
+          value="#all"
+          title="All"
+          onClick={props.changeFilter}
+          filter={props.filter}
+        />
+        <FooterItem
+          value="#allactive"
+          title="Active"
+          onClick={props.changeFilter}
+          filter={props.filter}
+        />
+        <FooterItem
+          value="#allcompleted"
+          title="Completed"
+          onClick={props.changeFilter}
+          filter={props.filter}
+        />
       </ul>
 
-      {completed.length > 0 && (
+      {props.completedCounter > 0 && (
         <button
           className={style.clearComplete}
           onClick={props.deleteCompleted}
         >
-          clear completed [{completed.length}]
+          clear completed [{props.completedCounter}]
         </button>
       )}
     </div>
   );
+};
+
+Footer.propTypes = {
+  activeCounter: PropTypes.number,
+  deleteCompleted: PropTypes.func,
+  completedCounter: PropTypes.number,
+  changeFilter: PropTypes.func,
+  filter: PropTypes.string
+};
+
+Footer.defaultProps = {
+  activeCounter: 0,
+  deleteCompleted: () => null,
+  completedCounter: 0,
+  changeFilter: () => null,
+  filter: "#all"
 };
 
 export default Footer;
