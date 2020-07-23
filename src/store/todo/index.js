@@ -1,0 +1,3 @@
+// REDUCER
+
+export default () => ({});

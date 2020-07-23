@@ -5,7 +5,7 @@ import TodoList from "components/todoList/todoList";
 import Footer from "components/footer/footer";
 
 import style from "App.module.css";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 import {
@@ -16,30 +16,13 @@ import {
   updateCheckbox,
   updateTask
 } from "./redux/todo-reducer";
-import {TaskType} from "./utils/types";
-
-const AppSC = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  input:focus {
-  outline: none;
-}`;
-
-const LogoSC = styled.h1`
-  margin: 30px;
-  font-size: 100px;
-  font-style: normal;
-  font-weight: 100;
-  color: #ead7d7;
-`;
+import { TaskType } from "./utils/types";
 
 class App extends React.Component {
   render() {
     let activeCounter = 0;
     let completedCounter = 0;
-    const tasks = this.props.todoData.filter(({check}) => {
+    const tasks = this.props.todoData.filter(({ check }) => {
       // eslint-disable-next-line no-unused-expressions
       check ? completedCounter++ : activeCounter++;
 
@@ -54,8 +37,8 @@ class App extends React.Component {
     });
 
     return (
-      <AppSC>
-        <LogoSC className={style.logo}>todos</LogoSC>
+      <StyledPage>
+        <h1 className="page-logo">todos</h1>
 
         <InputLine
           activeCounter={activeCounter}
@@ -79,25 +62,28 @@ class App extends React.Component {
           completedCounter={completedCounter}
           changeFilter={this.props.changeFilter}
         />
-      </AppSC>
+      </StyledPage>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  todoData: state.todoReducer.todoData,
-  filter: state.todoReducer.filter
-});
+const StyledPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-export default connect(mapStateToProps, {
-  addTask,
-  changeAllCheckbox,
-  updateCheckbox,
-  updateTask,
-  deleteTask,
-  deleteCompletedTasks,
-  changeFilter
-})(App);
+  input:focus {
+    outline: none;
+  }
+
+  .page-logo {
+    margin: 30px;
+    font-size: 100px;
+    font-style: normal;
+    font-weight: 100;
+    color: #ead7d7;
+  }
+`;
 
 App.propTypes = {
   filter: PropTypes.string,
@@ -122,3 +108,21 @@ App.defaultProps = {
   addTask: () => null,
   todoData: []
 };
+
+const connectFunction = connect(
+  (state) => ({
+    todoData: state.todoReducer.todoData,
+    filter: state.todoReducer.filter
+  }),
+  {
+    addTask,
+    changeAllCheckbox,
+    updateCheckbox,
+    updateTask,
+    deleteTask,
+    deleteCompletedTasks,
+    changeFilter
+  }
+);
+
+export default connectFunction(App);

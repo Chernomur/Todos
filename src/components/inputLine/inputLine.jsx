@@ -12,13 +12,9 @@ const HeaderInputSC = styled.div`
   height: 63px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-    display: flex;
-    background-color: #fefefe;
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     width: 100%;
-    height: 63px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
+  }
 `;
 const NewTodoSC = styled.input`
   border: none;
@@ -30,7 +26,7 @@ const NewTodoSC = styled.input`
 const CheckAllSC = styled.input`
   width: 8%;
   height: 80%;
-  `;
+`;
 
 const InputLine = (props) => {
   const inputText = React.createRef();

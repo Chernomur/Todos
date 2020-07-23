@@ -100,20 +100,27 @@ class ListItem extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener("click", this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("click", this.handleClickOutside);
+  }
+
   saveText = (id) => {
     this.props.updateTask(id, this.state.oldText);
   }
 
-  toShowInput = (show) => {
-    const copy = {...this.state};
-    copy.showInput = show;
-    this.setState(copy);
+  toShowInput = (showInput) => {
+    // const copy = { ...this.state };
+    // copy.showInput = show;
+    this.setState({ showInput });
   }
 
   updateText = (event) => {
     const text = event.target.value;
-    const copyState = {...this.state, oldText: text};
-    this.setState({oldText: copyState.oldText});
+    this.setState({ oldText: text });
   }
 
   inputConfirmation = (e) => {
@@ -123,7 +130,7 @@ class ListItem extends React.Component {
     }
     if (e.key === "Escape") {
       this.toShowInput(false);
-      this.setState({oldText: this.props.text});
+      this.setState({ oldText: this.props.text });
     }
   }
 
@@ -132,12 +139,8 @@ class ListItem extends React.Component {
 
     if (!event.path.includes(clickedElem) && event.target.tagName === "LI") {
       this.toShowInput(false);
-      this.setState({oldText: this.props.text});
+      this.setState({ oldText: this.props.text });
     }
-  }
-
-  componentDidMount() {
-    document.addEventListener("click", this.handleClickOutside, false);
   }
 
   render() {
@@ -150,29 +153,34 @@ class ListItem extends React.Component {
           }
         }}
       >
-        {this.state.showInput ?
+        {this.state.showInput ? (
           <TodoInputSC
             autoFocus
             onKeyDown={this.inputConfirmation}
             onChange={this.updateText}
             value={this.state.oldText}
           />
-          : <TaskContainerSC>
-            <CheckSC
-              onChange={() => this.props.updateCheckbox(this.props.id)}
-              type="checkbox"
-              checked={this.props.check}
-            />
-            {this.props.check ?
-              <TodoCheckSC>{this.props.text}</TodoCheckSC>
-              : <TodoSC> {this.props.text} </TodoSC>}
+        )
+          : (
+            <TaskContainerSC>
+              <CheckSC
+                onChange={() => this.props.updateCheckbox(this.props.id)}
+                type="checkbox"
+                checked={this.props.check}
+              />
 
-            <DeleteTodo
-              onClick={() => this.props.deleteTask(this.props.id)}
-            >
-              ✕
-            </DeleteTodo>
-          </TaskContainerSC>
+              {this.props.check ?
+                <TodoCheckSC>{this.props.text}</TodoCheckSC>
+                : <TodoSC>{this.props.text}</TodoSC>
+              }
+
+              <DeleteTodo
+                onClick={() => this.props.deleteTask(this.props.id)}
+              >
+                ✕
+              </DeleteTodo>
+            </TaskContainerSC>
+          )
         }
       </ListItemSC>
     );
@@ -189,7 +197,7 @@ ListItem.propTypes = {
 };
 
 ListItem.defaultProps = {
-  text: " ",
+  text: "",
   check: false,
   updateTask: () => null,
   updateCheckbox: () => null,
