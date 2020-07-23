@@ -1,4 +1,4 @@
-.todoList {
+/*.todoList {
   display: flex;
   background-color: #fefefe;
   width: 550px;
@@ -12,8 +12,9 @@
 
 .todoList li {
   list-style-type: none;
-}
+}*/
 
+/*
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   .todoList {
     display: flex;
@@ -31,4 +32,4 @@
   .todoList li {
     list-style-type: none;
   }
-}
+}*/

@@ -1,139 +1,124 @@
 import React from "react";
-import {v4 as uuidv4} from "uuid";
 
 import InputLine from "components/inputLine/inputLine";
 import TodoList from "components/todoList/todoList";
 import Footer from "components/footer/footer";
 
 import style from "App.module.css";
-import {storage} from "utils";
+import {connect} from "react-redux";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import {
+  addTask,
+  changeAllCheckbox, changeFilter,
+  deleteCompletedTasks,
+  deleteTask,
+  updateCheckbox,
+  updateTask
+} from "./redux/todo-reducer";
+import {TaskType} from "./utils/types";
+
+const AppSC = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  input:focus {
+  outline: none;
+}`;
+
+const LogoSC = styled.h1`
+  margin: 30px;
+  font-size: 100px;
+  font-style: normal;
+  font-weight: 100;
+  color: #ead7d7;
+`;
 
 class App extends React.Component {
-  state = {
-    todoData: storage.tasks.get(),
-    filter: window.location.hash || "#all"
-  }
-
-  saveTasksToStorage = () => {
-    storage.tasks.set(this.state.todoData);
-  }
-
-  checkAll = () => {
-    const isActive = Boolean(
-      this.state.todoData.find((item) => (item.check === false))
-    );
-
-    const todoData = this.state.todoData.map((item) => ({
-      ...item,
-      check: isActive
-    }));
-
-    this.setState({todoData}, this.saveTasksToStorage);
-  }
-
-  addTodo = (text) => {
-    const todoData = [...this.state.todoData];
-
-    todoData.push({
-      id: uuidv4(),
-      check: false,
-      text
-    });
-
-    this.setState({todoData}, this.saveTasksToStorage);
-  }
-
-  deleteItem = (id) => {
-    const todoData = this.state.todoData.filter((item) => item.id !== id);
-
-    this.setState({todoData}, this.saveTasksToStorage);
-  }
-
-  updateCheckBox = (id) => {
-    const todoData = this.state.todoData.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          check: !item.check
-        };
-      }
-      return item;
-    });
-
-    this.setState({todoData}, this.saveTasksToStorage);
-  }
-
-  updateTodo = (id, text) => {
-    const todoData = this.state.todoData.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          text
-        };
-      }
-      return item;
-    });
-
-    this.setState({todoData}, this.saveTasksToStorage);
-  }
-
-  deleteCompleted = () => {
-    const todoData = this.state.todoData.filter((item) => item.check === false);
-    this.setState({todoData}, this.saveTasksToStorage);
-  }
-
-  changeFilter = (filter) => {
-    this.setState({filter}, this.saveTasksToStorage);
-  }
-
   render() {
     let activeCounter = 0;
     let completedCounter = 0;
-    const tasks = this.state.todoData.filter(({check}) => {
+    const tasks = this.props.todoData.filter(({check}) => {
       // eslint-disable-next-line no-unused-expressions
       check ? completedCounter++ : activeCounter++;
 
-      if (this.state.filter === "#all") {
+      if (this.props.filter === "#all") {
         return true;
       }
 
       return (
-        (check && this.state.filter === "#allcompleted") ||
-        (!check && this.state.filter === "#allactive")
+        (check && this.props.filter === "#allcompleted") ||
+        (!check && this.props.filter === "#allactive")
       );
     });
 
     return (
-      <div className={style.App}>
-        <h1 className={style.logo}>todos</h1>
+      <AppSC>
+        <LogoSC className={style.logo}>todos</LogoSC>
 
         <InputLine
           activeCounter={activeCounter}
-          todolist={this.state.todoData}
+          todoData={this.props.todoData}
           className={style.inputLine}
-          addTodo={this.addTodo}
-          checkAll={this.checkAll}
+          addTask={this.props.addTask}
+          changeAllCheckbox={this.props.changeAllCheckbox}
         />
 
         <TodoList
-          returnOldText={this.returnOldText}
-          toShowInput={this.toShowInput}
-          updateCheckBox={this.updateCheckBox}
-          updateTodo={this.updateTodo}
-          deleteItem={this.deleteItem}
+          updateCheckbox={this.props.updateCheckbox}
+          updateTask={this.props.updateTask}
+          deleteTask={this.props.deleteTask}
           tasks={tasks}
         />
 
         <Footer
-          filter={this.state.filter}
+          filter={this.props.filter}
           activeCounter={activeCounter}
-          deleteCompleted={this.deleteCompleted}
+          deleteCompletedTasks={this.props.deleteCompletedTasks}
           completedCounter={completedCounter}
-          changeFilter={this.changeFilter}
+          changeFilter={this.props.changeFilter}
         />
-      </div>
+      </AppSC>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  todoData: state.todoReducer.todoData,
+  filter: state.todoReducer.filter
+});
+
+export default connect(mapStateToProps, {
+  addTask,
+  changeAllCheckbox,
+  updateCheckbox,
+  updateTask,
+  deleteTask,
+  deleteCompletedTasks,
+  changeFilter
+})(App);
+
+App.propTypes = {
+  filter: PropTypes.string,
+  addTask: PropTypes.func,
+  updateCheckbox: PropTypes.func,
+  updateTask: PropTypes.func,
+  deleteTask: PropTypes.func,
+  todoData: PropTypes.arrayOf(TaskType),
+  changeFilter: PropTypes.func,
+  changeAllCheckbox: PropTypes.func,
+  deleteCompletedTasks: PropTypes.func
+};
+
+App.defaultProps = {
+  filter: "#all",
+  changeFilter: () => null,
+  updateCheckbox: () => null,
+  updateTask: () => null,
+  deleteTask: () => null,
+  changeAllCheckbox: () => null,
+  deleteCompletedTasks: () => null,
+  addTask: () => null,
+  todoData: []
+};

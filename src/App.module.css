@@ -1,17 +1,19 @@
+/*
 .App {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+*/
 
-input:focus {
+/*input:focus {
   outline: none;
-}
+}*/
 
-.logo {
+/*.logo {
   margin: 30px;
   font-size: 100px;
   font-style: normal;
   font-weight: 100;
   color: #ead7d7;
-}
+}*/
