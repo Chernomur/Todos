@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 
-import todo from "./todo";
+import todoReducer from "./todo";
+import filterReducer from "./filter";
 
 export default combineReducers({
-  todo
+  todoReducer,
+  filterReducer
 });

@@ -3,30 +3,7 @@ import PropTypes from "prop-types";
 
 import {TaskType} from "utils/types";
 import styled from "styled-components";
-
-const HeaderInputSC = styled.div`
-  padding: 0 10px 0 10px;
-  display: flex;
-  background-color: #fefefe;
-  width: 530px;
-  height: 63px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  
-  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-    width: 100%;
-  }
-`;
-const NewTodoSC = styled.input`
-  border: none;
-  width: 90%;
-  height: 90%;
-  font-size: 24px;
-`;
-
-const CheckAllSC = styled.input`
-  width: 8%;
-  height: 80%;
-`;
+import theme from "ui/styles/theme";
 
 const InputLine = (props) => {
   const inputText = React.createRef();
@@ -59,6 +36,33 @@ const InputLine = (props) => {
     </HeaderInputSC>
   );
 };
+
+const HeaderInputSC = styled.div`
+  padding: 0 10px 0 10px;
+  display: flex;
+  background-color: ${theme.colors.taskColor};
+  width: 530px;
+  height: 63px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+@media (${theme.windowSize.mobile})  {
+  width: 100%;
+}`;
+
+const NewTodoSC = styled.input`
+ ::placeholder{
+ color: ${theme.colors.placeholderColor};
+ }
+  border: none;
+  width: 90%;
+  height: 90%;
+  font-size: 24px;
+`;
+
+const CheckAllSC = styled.input`
+  width: 8%;
+  height: 80%;
+`;
 
 InputLine.propTypes = {
   activeCounter: PropTypes.number,

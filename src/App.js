@@ -1,76 +1,80 @@
 import React from "react";
 
-import InputLine from "components/inputLine/inputLine";
-import TodoList from "components/todoList/todoList";
-import Footer from "components/footer/footer";
+import InputLine from "components/inputLine/InputLine";
+import TodoList from "components/todoList/TodoList";
+import Footer from "components/footer/Footer";
 
 import style from "App.module.css";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import theme from "./ui/styles/theme";
+import { TaskType } from "./utils/types";
 import {
   addTask,
-  changeAllCheckbox, changeFilter,
+  changeAllCheckbox,
   deleteCompletedTasks,
   deleteTask,
   updateCheckbox,
   updateTask
-} from "./redux/todo-reducer";
-import { TaskType } from "./utils/types";
+} from "./store/todo/actions";
+import { changeFilter } from "./store/filter/actions";
 
-class App extends React.Component {
-  render() {
-    let activeCounter = 0;
-    let completedCounter = 0;
-    const tasks = this.props.todoData.filter(({ check }) => {
-      // eslint-disable-next-line no-unused-expressions
-      check ? completedCounter++ : activeCounter++;
+const App = (props) => {
+  let activeCounter = 0;
+  let completedCounter = 0;
+  const tasks = props.todoData.filter(({ check }) => {
+    // eslint-disable-next-line no-unused-expressions
+    check ? completedCounter++ : activeCounter++;
 
-      if (this.props.filter === "#all") {
-        return true;
-      }
-
-      return (
-        (check && this.props.filter === "#allcompleted") ||
-        (!check && this.props.filter === "#allactive")
-      );
-    });
+    if (props.filter === "#all") {
+      return true;
+    }
 
     return (
-      <StyledPage>
-        <h1 className="page-logo">todos</h1>
-
-        <InputLine
-          activeCounter={activeCounter}
-          todoData={this.props.todoData}
-          className={style.inputLine}
-          addTask={this.props.addTask}
-          changeAllCheckbox={this.props.changeAllCheckbox}
-        />
-
-        <TodoList
-          updateCheckbox={this.props.updateCheckbox}
-          updateTask={this.props.updateTask}
-          deleteTask={this.props.deleteTask}
-          tasks={tasks}
-        />
-
-        <Footer
-          filter={this.props.filter}
-          activeCounter={activeCounter}
-          deleteCompletedTasks={this.props.deleteCompletedTasks}
-          completedCounter={completedCounter}
-          changeFilter={this.props.changeFilter}
-        />
-      </StyledPage>
+      (check && props.filter === "#allcompleted") ||
+      (!check && props.filter === "#allactive")
     );
-  }
-}
+  });
+
+  return (
+    <StyledPage>
+      <h1 className="page-logo">todos</h1>
+
+      <InputLine
+        activeCounter={activeCounter}
+        todoData={props.todoData}
+        className={style.inputLine}
+        addTask={props.addTask}
+        changeAllCheckbox={props.changeAllCheckbox}
+      />
+
+      <TodoList
+        updateCheckbox={props.updateCheckbox}
+        updateTask={props.updateTask}
+        deleteTask={props.deleteTask}
+        tasks={tasks}
+      />
+
+      <Footer
+        filter={props.filter}
+        activeCounter={activeCounter}
+        deleteCompletedTasks={props.deleteCompletedTasks}
+        completedCounter={completedCounter}
+        changeFilter={props.changeFilter}
+      />
+    </StyledPage>
+  );
+};
 
 const StyledPage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  @media (${theme.windowSize.mobile}) {
+    align-items: start;
+  }
 
   input:focus {
     outline: none;
@@ -81,7 +85,7 @@ const StyledPage = styled.div`
     font-size: 100px;
     font-style: normal;
     font-weight: 100;
-    color: #ead7d7;
+    color: ${theme.colors.logoColor};
   }
 `;
 
@@ -112,7 +116,7 @@ App.defaultProps = {
 const connectFunction = connect(
   (state) => ({
     todoData: state.todoReducer.todoData,
-    filter: state.todoReducer.filter
+    filter: state.filterReducer.filter
   }),
   {
     addTask,

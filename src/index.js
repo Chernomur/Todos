@@ -5,16 +5,13 @@ import { Provider } from "react-redux";
 
 import App from "App";
 import GlobalStyles from "ui/styles/GlobalStyles";
-import store from "redux/store";
+import store from "store";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <>
         <GlobalStyles />
-
         <App className="app" />
-      </>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
