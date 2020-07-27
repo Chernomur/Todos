@@ -7,12 +7,12 @@ import theme from "ui/styles/theme";
 import FooterItem from "./footerItem/FooterItem.jsx";
 
 const Footer = (props) => {
+  const itemsLeftTitle = `item${props.activeCounter === 1 ? "" : "s"} left`;
+
   return (
-    <FooterSC>
+    <StyledFooter>
       <ItemsLeftSC>
-        {props.activeCounter === 1 ?
-          `${props.activeCounter} item left`
-          : `${props.activeCounter} items left`}
+        {itemsLeftTitle}
       </ItemsLeftSC>
 
       <FilterSC>
@@ -43,16 +43,17 @@ const Footer = (props) => {
           clear completed [{props.completedCounter}]
         </ClearCompleteSC>
       )}
-    </FooterSC>
+    </StyledFooter>
   );
 };
 
 const ItemsLeftSC = styled.span`
-@media (${theme.windowSize.mobile}) {
-  .itemsLeft {
-    grid-area: itemsLeft;
-  } 
-}`;
+  @media (${theme.windowSize.mobile}) {
+    .itemsLeft {
+      grid-area: itemsLeft;
+    } 
+  }
+`;
 
 const ClearCompleteSC = styled.button`
   outline: none;
@@ -69,7 +70,7 @@ const FilterSC = styled.ul`
   }
 `;
 
-const FooterSC = styled.div`
+const StyledFooter = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   align-items: center;
@@ -77,25 +78,23 @@ const FooterSC = styled.div`
   width: 550px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-@media (${theme.windowSize.mobile}) { 
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas:
+  @media (${theme.windowSize.mobile}) { 
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
       "itemsLeft clearComplete"
       "filter filter";
-  align-items: center;
-  width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
 
-  ${ClearCompleteSC} {
-    grid-area: clearComplete;
-  }
+    ${ClearCompleteSC} {
+      grid-area: clearComplete;
+    }
 
-  ${FilterSC} {
-    grid-area: filter;
+    ${FilterSC} {
+      grid-area: filter;
+    }
   }
-}`;
+`;
 
 Footer.propTypes = {
   activeCounter: PropTypes.number,

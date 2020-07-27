@@ -58,41 +58,46 @@ class ListItem extends React.Component {
           }
         }}
       >
-        {(this.props.inputStatus === this.props.id) ? (
-            <TodoInputSC
-              autoFocus
-              onKeyDown={this.inputConfirmation}
-              onChange={this.updateText}
-              value={this.state.unsavedText}
-            />)
-          : null}
-        {(this.props.inputStatus !== this.props.id) ? (
-            <TaskContainerSC>
-              <CheckSC
-                onChange={this.changeTaskStatus}
-                type="checkbox"
-                checked={this.props.check}
-              />
+        {this.props.inputStatus === this.props.id && (
+          <TodoInputSC
+            autoFocus
+            onKeyDown={this.inputConfirmation}
+            onChange={this.updateText}
+            value={this.state.unsavedText}
+          />
+        )}
 
-              {this.props.check ?
-                <TodoCheckSC>{this.props.text}</TodoCheckSC>
-                : <TodoSC>{this.props.text}</TodoSC>
-              }
+        {this.props.inputStatus !== this.props.id && (
+          <TaskContainerSC>
+            <CheckSC
+              onChange={this.changeTaskStatus}
+              type="checkbox"
+              checked={this.props.check}
+            />
 
-              <DeleteTodo
-                onClick={this.deleteTaskClick}
-              >
-                ✕
-              </DeleteTodo>
-            </TaskContainerSC>)
-          : null}
+            {this.props.check ?
+              <TodoCheckSC checked={this.props.check}>{this.props.text}</TodoCheckSC>
+              : <TodoSC>{this.props.text}</TodoSC>
+            }
+
+            <DeleteTodo onClick={this.deleteTaskClick}>
+              ✕
+            </DeleteTodo>
+          </TaskContainerSC>
+        )}
       </ListItemSC>
     );
   }
 }
 
 const DeleteTodo = styled.button`
-  visibility: hidden;
+  opacity: 0;
+  transition: 0.1s;
+  font-size: large;
+  font-weight: bolder;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 `;
 
 const ListItemSC = styled.li`
@@ -105,11 +110,7 @@ const ListItemSC = styled.li`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
   :hover ${DeleteTodo} {
-    visibility: visible;
-    font-size: large;
-    font-weight: bolder;
-    border: 0;
-    background: transparent;
+    opacity: 1;
   }
 
 @media (${theme.windowSize.mobile}) {
@@ -150,7 +151,7 @@ const TodoCheckSC = styled.div`
   display: flex;
   justify-self: start;
   align-self: center;
-  text-decoration: line-through;
+  text-decoration: ${({ checked }) => (checked ? "line-through" : "unset")};
   border: none;
   resize: none;
   color: ${theme.colors.placeholderColor};

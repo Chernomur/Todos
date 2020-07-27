@@ -1,11 +1,11 @@
 import React from "react";
-
 import PropTypes from "prop-types";
 import styled from "styled-components";
-import theme from "ui/styles/theme";
-import { TaskType } from "utils/types";
 
-import ListItem from "./listItem/ListItem.jsx";
+import theme from "ui/styles/theme";
+import ListItem from "components/todoList/listItem/ListItem";
+
+import { TaskType } from "utils/types";
 
 class TodoList extends React.Component {
   constructor(props) {
@@ -15,8 +15,8 @@ class TodoList extends React.Component {
     };
   }
 
-  changeInputStatus = (value) => {
-    this.setState({ input: value });
+  changeInputStatus = (input) => {
+    this.setState({ input });
   }
 
   render() {

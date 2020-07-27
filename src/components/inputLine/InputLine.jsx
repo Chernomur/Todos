@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import {TaskType} from "utils/types";
+import { TaskType } from "utils/types";
 import styled from "styled-components";
 import theme from "ui/styles/theme";
 
@@ -17,7 +17,7 @@ const InputLine = (props) => {
   };
 
   return (
-    <HeaderInputSC>
+    <StyledHeader>
       {props.todoData.length > 0 && (
         <CheckAllSC
           type="checkbox"
@@ -26,18 +26,17 @@ const InputLine = (props) => {
         />
       )}
 
-      <NewTodoSC
-        id="new-todo"
+      <StyledInput
         placeholder="What needs to be done?"
         autoFocus
         onKeyDown={addText}
         ref={inputText}
       />
-    </HeaderInputSC>
+    </StyledHeader>
   );
 };
 
-const HeaderInputSC = styled.div`
+const StyledHeader = styled.div`
   padding: 0 10px 0 10px;
   display: flex;
   background-color: ${theme.colors.taskColor};
@@ -45,13 +44,14 @@ const HeaderInputSC = styled.div`
   height: 63px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
-@media (${theme.windowSize.mobile})  {
-  width: 100%;
-}`;
+  @media (${theme.windowSize.mobile}) {
+    width: 100%;
+  }
+`;
 
-const NewTodoSC = styled.input`
- ::placeholder{
- color: ${theme.colors.placeholderColor};
+const StyledInput = styled.input`
+ ::placeholder {
+  color: ${theme.colors.placeholderColor};
  }
   border: none;
   width: 90%;

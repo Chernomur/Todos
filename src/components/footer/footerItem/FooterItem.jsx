@@ -7,6 +7,7 @@ import theme from "ui/styles/theme";
 const FooterItem = ({ filter, title, value, changeFilter }) => {
   const changeFilterClick = () => {
     changeFilter(value);
+    window.location.hash = value;
   };
 
   return (
@@ -28,11 +29,12 @@ const FilterButton = styled.li`
     padding: 8px;
     margin: 5px;
     border-radius: 10px;
-    border:${(props) => (props.test ? "1px solid whitesmoke" : "1px solid lightgray")};
+    border: ${(props) => (props.test ? "1px solid whitesmoke" : "1px solid lightgray")};
     background-color: ${(props) => (props.test ? theme.colors.backgroundColor : "")};
-  }
-  :hover a{
-   background-color: ${theme.colors.hoverLinkColor}
+
+    :hover {
+      background-color: ${theme.colors.hoverLinkColor}
+    }
   }
 `;
 

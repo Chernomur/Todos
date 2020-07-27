@@ -15,17 +15,22 @@ const getInitialState = () => ({
 
 const todoReducer = (state = getInitialState(), action) => {
   switch (action.type) {
-    case ADD_TASK:
+    case ADD_TASK: {
+      const todoData = [
+        ...state.todoData, {
+          id: uuidv4(),
+          check: false,
+          text: action.data
+        }
+      ];
+
+      storage.tasks.set(todoData);
+
       return {
         ...state,
-        todoData: [
-          ...state.todoData, {
-            id: uuidv4(),
-            check: false,
-            text: action.data
-          }
-        ]
+        todoData
       };
+    }
 
     case DELETE_TASK: {
       const newTasks = state.todoData.filter((item) => item.id !== action.data);

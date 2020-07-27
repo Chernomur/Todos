@@ -1,15 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import InputLine from "components/inputLine/InputLine";
 import TodoList from "components/todoList/TodoList";
 import Footer from "components/footer/Footer";
 
-import style from "App.module.css";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import theme from "./ui/styles/theme";
-import { TaskType } from "./utils/types";
+import theme from "ui/styles/theme";
+import { TaskType } from "utils/types";
 import {
   addTask,
   changeAllCheckbox,
@@ -17,8 +16,8 @@ import {
   deleteTask,
   updateCheckbox,
   updateTask
-} from "./store/todo/actions";
-import { changeFilter } from "./store/filter/actions";
+} from "store/todo/actions";
+import { changeFilter } from "store/filter/actions";
 
 const App = (props) => {
   let activeCounter = 0;
@@ -44,7 +43,6 @@ const App = (props) => {
       <InputLine
         activeCounter={activeCounter}
         todoData={props.todoData}
-        className={style.inputLine}
         addTask={props.addTask}
         changeAllCheckbox={props.changeAllCheckbox}
       />
@@ -90,27 +88,15 @@ const StyledPage = styled.div`
 `;
 
 App.propTypes = {
-  filter: PropTypes.string,
-  addTask: PropTypes.func,
-  updateCheckbox: PropTypes.func,
-  updateTask: PropTypes.func,
-  deleteTask: PropTypes.func,
-  todoData: PropTypes.arrayOf(TaskType),
-  changeFilter: PropTypes.func,
-  changeAllCheckbox: PropTypes.func,
-  deleteCompletedTasks: PropTypes.func
-};
-
-App.defaultProps = {
-  filter: "#all",
-  changeFilter: () => null,
-  updateCheckbox: () => null,
-  updateTask: () => null,
-  deleteTask: () => null,
-  changeAllCheckbox: () => null,
-  deleteCompletedTasks: () => null,
-  addTask: () => null,
-  todoData: []
+  filter: PropTypes.string.isRequired,
+  addTask: PropTypes.func.isRequired,
+  updateCheckbox: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  changeFilter: PropTypes.func.isRequired,
+  changeAllCheckbox: PropTypes.func.isRequired,
+  deleteCompletedTasks: PropTypes.func.isRequired,
+  todoData: PropTypes.arrayOf(TaskType).isRequired
 };
 
 const connectFunction = connect(
