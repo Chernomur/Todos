@@ -64,6 +64,7 @@ const StyledInput = styled.input`
 const StyledCheckAll = styled.input`
   width: 50px;
   height: 50px;
+  cursor: pointer;
 `;
 
 InputLine.propTypes = {

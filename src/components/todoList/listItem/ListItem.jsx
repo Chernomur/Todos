@@ -123,6 +123,7 @@ const StyledCheck = styled.input`
   border-radius: 100px;
   width: 40px;
   height: 60px;
+  cursor: pointer;
 `;
 
 const StyledTaskContainer = styled.div`
