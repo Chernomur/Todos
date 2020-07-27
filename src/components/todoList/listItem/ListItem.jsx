@@ -8,12 +8,12 @@ class ListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      oldText: this.props.text
+      unsavedText: this.props.text
     };
   }
 
   saveText = (id) => {
-    this.props.updateTask({ id, text: this.state.oldText });
+    this.props.updateTask({ id, text: this.state.unsavedText });
   }
 
   changeTaskStatus = () => {
@@ -32,7 +32,7 @@ class ListItem extends React.Component {
 
   updateText = (event) => {
     const text = event.target.value;
-    this.setState({ oldText: text });
+    this.setState({ unsavedText: text });
   }
 
   inputConfirmation = (e) => {
@@ -42,7 +42,7 @@ class ListItem extends React.Component {
     }
     if (e.key === "Escape") {
       this.props.changeInputStatus(null);
-      this.setState({ oldText: this.props.text });
+      this.setState({ unsavedText: this.props.text });
     }
   }
 
@@ -63,7 +63,7 @@ class ListItem extends React.Component {
               autoFocus
               onKeyDown={this.inputConfirmation}
               onChange={this.updateText}
-              value={this.state.oldText}
+              value={this.state.unsavedText}
             />)
           : null}
         {(this.props.inputStatus !== this.props.id) ? (
