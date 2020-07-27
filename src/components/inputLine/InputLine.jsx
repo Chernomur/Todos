@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { TaskType } from "utils/types";
 import styled from "styled-components";
 import theme from "ui/styles/theme";
+import { connect } from "react-redux";
+import { addTask, changeAllCheckbox } from "../../store/todo/actions";
 
 const InputLine = (props) => {
   const inputText = React.createRef();
@@ -19,7 +21,7 @@ const InputLine = (props) => {
   return (
     <StyledHeader>
       {props.todoData.length > 0 && (
-        <CheckAllSC
+        <StyledCheckAll
           type="checkbox"
           onChange={props.changeAllCheckbox}
           checked={props.activeCounter === 0}
@@ -39,19 +41,19 @@ const InputLine = (props) => {
 const StyledHeader = styled.div`
   padding: 0 10px 0 10px;
   display: flex;
-  background-color: ${theme.colors.taskColor};
+  background-color: ${theme.colors.task};
   width: 530px;
   height: 63px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
-  @media (${theme.windowSize.mobile}) {
+  @media (max-width: ${theme.windowSize.laptop}) {
     width: 100%;
   }
 `;
 
 const StyledInput = styled.input`
  ::placeholder {
-  color: ${theme.colors.placeholderColor};
+    color: ${theme.colors.placeholder};
  }
   border: none;
   width: 90%;
@@ -59,23 +61,27 @@ const StyledInput = styled.input`
   font-size: 24px;
 `;
 
-const CheckAllSC = styled.input`
-  width: 8%;
-  height: 80%;
+const StyledCheckAll = styled.input`
+  width: 50px;
+  height: 50px;
 `;
 
 InputLine.propTypes = {
   activeCounter: PropTypes.number,
-  todoData: PropTypes.arrayOf(TaskType),
-  addTask: PropTypes.func,
-  changeAllCheckbox: PropTypes.func
+  todoData: PropTypes.arrayOf(TaskType).isRequired,
+  addTask: PropTypes.func.isRequired,
+  changeAllCheckbox: PropTypes.func.isRequired
 };
 
 InputLine.defaultProps = {
-  activeCounter: 0,
-  todoData: [],
-  addTask: () => null,
-  changeAllCheckbox: () => null
+  activeCounter: 0
 };
 
-export default InputLine;
+const connectFunction = connect((state) => ({
+  todoData: state.todo.todoData
+}), {
+  addTask,
+  changeAllCheckbox
+});
+
+export default connectFunction(InputLine);

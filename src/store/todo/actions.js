@@ -4,7 +4,7 @@ import {
   CHANGE_ALL_CHECKBOX,
   DELETE_COMPLETED_TASKS,
   DELETE_TASK,
-  UPDATE_CHECKBOX
+  CHANGE_INPUT_STATUS
 } from "./actionNames";
 
 export const addTask = (data) => ({
@@ -13,10 +13,6 @@ export const addTask = (data) => ({
 });
 export const deleteTask = (data) => ({
   type: DELETE_TASK,
-  data
-});
-export const updateCheckbox = (data) => ({
-  type: UPDATE_CHECKBOX,
   data
 });
 export const updateTask = (data) => ({
@@ -28,4 +24,8 @@ export const changeAllCheckbox = () => ({
 });
 export const deleteCompletedTasks = () => ({
   type: DELETE_COMPLETED_TASKS
+});
+export const changeInputStatus = (data) => ({
+  type: CHANGE_INPUT_STATUS,
+  data
 });

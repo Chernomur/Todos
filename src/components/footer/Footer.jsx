@@ -4,81 +4,83 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import theme from "ui/styles/theme";
 
+import { connect } from "react-redux";
+import { deleteCompletedTasks } from "store/todo/actions";
 import FooterItem from "./footerItem/FooterItem.jsx";
+import constants from "../../utils/constants";
 
 const Footer = (props) => {
-  const itemsLeftTitle = `item${props.activeCounter === 1 ? "" : "s"} left`;
+  const itemsLeftTitle = `${props.activeCounter} item${props.activeCounter === 1 ? "" : "s"} left`;
 
   return (
     <StyledFooter>
-      <ItemsLeftSC>
+      <StyledItemsLeft>
         {itemsLeftTitle}
-      </ItemsLeftSC>
+      </StyledItemsLeft>
 
-      <FilterSC>
+      <StyledFilter>
         <FooterItem
-          value="#all"
+          value={constants.all}
           title="All"
-          changeFilter={props.changeFilter}
-          filter={props.filter}
         />
         <FooterItem
-          value="#allactive"
+          value={constants.active}
           title="Active"
-          changeFilter={props.changeFilter}
-          filter={props.filter}
         />
         <FooterItem
-          value="#allcompleted"
+          value={constants.completed}
           title="Completed"
-          changeFilter={props.changeFilter}
-          filter={props.filter}
         />
-      </FilterSC>
+      </StyledFilter>
 
       {props.completedCounter > 0 && (
-        <ClearCompleteSC
+        <StyledClearComplete
           onClick={props.deleteCompletedTasks}
         >
           clear completed [{props.completedCounter}]
-        </ClearCompleteSC>
+        </StyledClearComplete>
       )}
     </StyledFooter>
   );
 };
 
-const ItemsLeftSC = styled.span`
-  @media (${theme.windowSize.mobile}) {
+const StyledItemsLeft = styled.span`
+  @media (max-width: ${theme.windowSize.laptop}) {
     .itemsLeft {
       grid-area: itemsLeft;
     } 
   }
 `;
 
-const ClearCompleteSC = styled.button`
+const StyledClearComplete = styled.button`
   outline: none;
   border: 0;
   background: transparent;
+  cursor: pointer;
+  
+  :hover {
+    background-color: ${theme.colors.mainBackground}
+  }
 `;
 
-const FilterSC = styled.ul`
+const StyledFilter = styled.ul`
   margin-left: 0;
   padding: 0;
   
-  li {
-    display: inline;
-  }
+    li {
+      display: inline;
+    }
 `;
 
 const StyledFooter = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   align-items: center;
-  background-color: ${theme.colors.taskColor};
+  background-color: ${theme.colors.task};
   width: 550px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
-  @media (${theme.windowSize.mobile}) { 
+  @media (max-width: ${theme.windowSize.laptop}) { 
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
@@ -86,11 +88,11 @@ const StyledFooter = styled.div`
       "filter filter";
     width: 100%;
 
-    ${ClearCompleteSC} {
+    ${StyledClearComplete} {
       grid-area: clearComplete;
     }
 
-    ${FilterSC} {
+    ${StyledFilter} {
       grid-area: filter;
     }
   }
@@ -98,18 +100,16 @@ const StyledFooter = styled.div`
 
 Footer.propTypes = {
   activeCounter: PropTypes.number,
-  deleteCompletedTasks: PropTypes.func,
-  completedCounter: PropTypes.number,
-  changeFilter: PropTypes.func,
-  filter: PropTypes.string
+  deleteCompletedTasks: PropTypes.func.isRequired,
+  completedCounter: PropTypes.number
 };
 
 Footer.defaultProps = {
   activeCounter: 0,
-  deleteCompletedTasks: () => null,
-  completedCounter: 0,
-  changeFilter: () => null,
-  filter: "#all"
+  completedCounter: 0
 };
 
-export default Footer;
+const connectFunction = connect(null, {
+  deleteCompletedTasks
+});
+export default connectFunction(Footer);

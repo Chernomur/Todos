@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import PropTypes from "prop-types";
 import theme from "ui/styles/theme";
+import { connect } from "react-redux";
+import { changeFilter } from "store/filter/actions";
 
 const FooterItem = ({ filter, title, value, changeFilter }) => {
   const changeFilterClick = () => {
@@ -11,44 +13,47 @@ const FooterItem = ({ filter, title, value, changeFilter }) => {
   };
 
   return (
-    <FilterButton test={filter === value}>
-      <a
-        href={value}
-        onClick={changeFilterClick}
-      >
-        {title}
-      </a>
+    <FilterButton
+      href={value}
+      onClick={changeFilterClick}
+      test={filter === value}>
+
+      {title}
     </FilterButton>
   );
 };
 
 const FilterButton = styled.li`
-  a {
-    color: ${theme.colors.linkColor};
-    text-decoration: none;
-    padding: 8px;
-    margin: 5px;
-    border-radius: 10px;
-    border: ${(props) => (props.test ? "1px solid whitesmoke" : "1px solid lightgray")};
-    background-color: ${(props) => (props.test ? theme.colors.backgroundColor : "")};
-
-    :hover {
-      background-color: ${theme.colors.hoverLinkColor}
-    }
+  color: ${theme.colors.link};
+  text-decoration: none;
+  padding: 8px;
+  margin: 5px;
+  border-radius: 10px;
+  border: ${(props) => (props.test ? "1px solid whitesmoke" : "1px solid lightgray")};
+  background-color: ${(props) => (props.test ? theme.colors.mainBackground : "")};
+  cursor: pointer;
+  
+  :hover {
+    background-color: ${theme.colors.hoverLink}
   }
+  
 `;
 
 FooterItem.propTypes = {
-  filter: PropTypes.string,
+  filter: PropTypes.string.isRequired,
   title: PropTypes.string,
   value: PropTypes.string,
-  changeFilter: PropTypes.func
+  changeFilter: PropTypes.func.isRequired
 };
 FooterItem.defaultProps = {
   title: "",
-  value: "",
-  filter: "#all",
-  changeFilter: () => null
+  value: ""
 };
 
-export default FooterItem;
+const connectFunction = connect((state) => ({
+  filter: state.filter.filter
+}),
+{
+  changeFilter
+});
+export default connectFunction(FooterItem);

@@ -1,14 +1,15 @@
 export default {
   colors: {
-    backgroundColor: "#F5F5F5",
-    logoColor: "#ead7d7",
-    taskColor: "#fefefe",
-    placeholderColor: "#e6e6e6",
-    linkColor: "black",
-    hoverLinkColor: "#989fc2"
+    mainBackground: "#F5F5F5",
+    logo: "#ead7d7",
+    task: "#fefefe",
+    placeholder: "#e6e6e6",
+    link: "black",
+    hoverLink: "#989fc2"
   },
   windowSize: {
-    mobile: "max-width: 1080px",
-    desktop: "min-width: 1080px"
+    mobile: "380px",
+    tablet: "450px",
+    laptop: "1024px"
   }
 };

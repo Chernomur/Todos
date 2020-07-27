@@ -1,7 +1,8 @@
+import constants from "utils/constants";
 import { CHANGE_FILTER } from "./actionNames";
 
 const getInitialState = () => ({
-  filter: window.location.hash || "#all"
+  filter: window.location.hash || constants.all
 });
 
 const filterReducer = (state = getInitialState(), action) => {

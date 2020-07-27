@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 import PropTypes from "prop-types";
 import theme from "ui/styles/theme";
+import { connect } from "react-redux";
+import { updateTask } from "store/todo/actions";
+import { changeInputStatus, deleteTask } from "../../../store/todo/actions";
 
 class ListItem extends React.Component {
   constructor(props) {
@@ -16,8 +19,8 @@ class ListItem extends React.Component {
     this.props.updateTask({ id, text: this.state.unsavedText });
   }
 
-  changeTaskStatus = () => {
-    this.props.updateCheckbox(this.props.id);
+  changeTaskStatus = (id) => {
+    this.props.updateTask({ id, text: this.props.text, check: !this.props.check });
   }
 
   deleteTaskClick = () => {
@@ -48,7 +51,7 @@ class ListItem extends React.Component {
 
   render() {
     return (
-      <ListItemSC
+      <StyledListItem
         id={this.props.id}
         onDoubleClick={this.checkInputStatus}
         onTouchEnd={this.checkInputStatus}
@@ -59,7 +62,7 @@ class ListItem extends React.Component {
         }}
       >
         {this.props.inputStatus === this.props.id && (
-          <TodoInputSC
+          <StyledTodoInput
             autoFocus
             onKeyDown={this.inputConfirmation}
             onChange={this.updateText}
@@ -68,24 +71,19 @@ class ListItem extends React.Component {
         )}
 
         {this.props.inputStatus !== this.props.id && (
-          <TaskContainerSC>
-            <CheckSC
-              onChange={this.changeTaskStatus}
+          <StyledTaskContainer>
+            <StyledCheck
+              onChange={() => this.changeTaskStatus(this.props.id)}
               type="checkbox"
               checked={this.props.check}
             />
-
-            {this.props.check ?
-              <TodoCheckSC checked={this.props.check}>{this.props.text}</TodoCheckSC>
-              : <TodoSC>{this.props.text}</TodoSC>
-            }
-
+            <StiledTodoText checked={this.props.check}>{this.props.text}</StiledTodoText>
             <DeleteTodo onClick={this.deleteTaskClick}>
               ✕
             </DeleteTodo>
-          </TaskContainerSC>
+          </StyledTaskContainer>
         )}
-      </ListItemSC>
+      </StyledListItem>
     );
   }
 }
@@ -100,10 +98,10 @@ const DeleteTodo = styled.button`
   cursor: pointer;
 `;
 
-const ListItemSC = styled.li`
+const StyledListItem = styled.li`
   padding: 0 15px 0 15px;
   display: flex;
-  background-color: ${theme.colors.taskColor};
+  background-color: ${theme.colors.task};
   width: 520px; 
   align-items: center;
   justify-items: end;
@@ -113,7 +111,7 @@ const ListItemSC = styled.li`
     opacity: 1;
   }
 
-@media (${theme.windowSize.mobile}) {
+@media (max-width: ${theme.windowSize.mobile}) {
   width: 100%;
     
   ${DeleteTodo} {
@@ -121,21 +119,20 @@ const ListItemSC = styled.li`
   }
 }`;
 
-const CheckSC = styled.input`
+const StyledCheck = styled.input`
   border-radius: 100px;
-  width: 8%;
+  width: 40px;
   height: 60px;
 `;
 
-const TaskContainerSC = styled.div`
+const StyledTaskContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 90%;
- 
 `;
 
-const TodoInputSC = styled.input`
+const StyledTodoInput = styled.input`
   padding: 10px 0 10px;
   margin: 8px 0 8px 40px;
   display: flex;
@@ -147,54 +144,42 @@ const TodoInputSC = styled.input`
   font-size: 24px;
 `;
 
-const TodoCheckSC = styled.div`
+const StiledTodoText = styled.div`
   display: flex;
   justify-self: start;
   align-self: center;
   text-decoration: ${({ checked }) => (checked ? "line-through" : "unset")};
   border: none;
   resize: none;
-  color: ${theme.colors.placeholderColor};
+  color: ${({ checked }) => (checked ? theme.colors.placeholder : "black")};
   width: 100%;
   min-height: 90%;
   font-size: 24px;
   word-break: break-all;
-  
-`;
-
-const TodoSC = styled.div`
-  display: flex;
-  justify-self: start;
-  align-self: center;
-  user-select: none;
-  border: none;
-  resize: none;
-  width: 100%;
-  height: 90%;
-  font-size: 24px;
-  word-break: break-all;
-  
 `;
 
 ListItem.propTypes = {
   id: PropTypes.string.isRequired,
   text: PropTypes.string,
   check: PropTypes.bool,
-  inputStatus: PropTypes.string,
-  updateTask: PropTypes.func,
-  updateCheckbox: PropTypes.func,
-  deleteTask: PropTypes.func,
-  changeInputStatus: PropTypes.func
+  inputStatus: PropTypes.string.isRequired,
+  updateTask: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  changeInputStatus: PropTypes.func.isRequired
 };
 
 ListItem.defaultProps = {
   text: "",
-  inputStatus: "null",
-  check: false,
-  updateTask: () => null,
-  updateCheckbox: () => null,
-  deleteTask: () => null,
-  changeInputStatus: () => null
+  check: false
 };
 
-export default ListItem;
+const connectFunction = connect((state) => ({
+  inputStatus: state.todo.input
+}),
+{
+  updateTask,
+  deleteTask,
+  changeInputStatus
+});
+
+export default connectFunction(ListItem);
