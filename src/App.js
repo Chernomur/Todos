@@ -23,7 +23,7 @@ import { changeFilter } from "./store/filter/actions";
 const App = (props) => {
   let activeCounter = 0;
   let completedCounter = 0;
-  const tasks = props.todoData.filter(({ check }) => {
+  const tasks = props.todoData.todoData.filter(({ check }) => {
     // eslint-disable-next-line no-unused-expressions
     check ? completedCounter++ : activeCounter++;
 
