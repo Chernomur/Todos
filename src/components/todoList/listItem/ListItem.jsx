@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-
 import PropTypes from "prop-types";
-import theme from "ui/styles/theme";
 import { connect } from "react-redux";
-import { updateTask } from "store/todo/actions";
-import { changeInputStatus, deleteTask } from "../../../store/todo/actions";
+
+import { updateTask, changeInputStatus, deleteTask } from "store/todo/actions";
+import theme from "ui/styles/theme";
 
 class ListItem extends React.Component {
   constructor(props) {
@@ -19,23 +18,28 @@ class ListItem extends React.Component {
     this.props.updateTask({ id, text: this.state.unsavedText });
   }
 
-  changeTaskStatus = (id) => {
-    this.props.updateTask({ id, text: this.props.text, check: !this.props.check });
+  changeTaskStatus = () => {
+    this.props.updateTask({ id: this.props.id, text: this.props.text, check: !this.props.check });
   }
 
-  deleteTaskClick = () => {
+  deleteTask = () => {
     this.props.deleteTask(this.props.id);
   }
 
-  checkInputStatus = (event) => {
-    if (event.target.tagName !== "INPUT") {
+  checkAndChangeInput = (event) => {
+    if (event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
       this.props.changeInputStatus(this.props.id);
     }
   }
 
-  updateText = (event) => {
-    const text = event.target.value;
-    this.setState({ unsavedText: text });
+  resetToNullInputStatus = () => {
+    if (this.props.inputStatus !== this.props.id) {
+      this.props.changeInputStatus(null);
+    }
+  }
+
+  changeText = (event) => {
+    this.setState({ unsavedText: event.target.value });
   }
 
   inputConfirmation = (e) => {
@@ -53,19 +57,15 @@ class ListItem extends React.Component {
     return (
       <StyledListItem
         id={this.props.id}
-        onDoubleClick={this.checkInputStatus}
-        onTouchEnd={this.checkInputStatus}
-        onClick={() => {
-          if (this.props.inputStatus !== this.props.id) {
-            this.props.changeInputStatus(null);
-          }
-        }}
+        onDoubleClick={this.checkAndChangeInput}
+        onTouchEnd={this.checkAndChangeInput}
+        onClick={this.resetToNullInputStatus}
       >
         {this.props.inputStatus === this.props.id && (
           <StyledTodoInput
             autoFocus
             onKeyDown={this.inputConfirmation}
-            onChange={this.updateText}
+            onChange={this.changeText}
             value={this.state.unsavedText}
           />
         )}
@@ -73,12 +73,12 @@ class ListItem extends React.Component {
         {this.props.inputStatus !== this.props.id && (
           <StyledTaskContainer>
             <StyledCheck
-              onChange={() => this.changeTaskStatus(this.props.id)}
+              onChange={this.changeTaskStatus}
               type="checkbox"
               checked={this.props.check}
             />
             <StiledTodoText checked={this.props.check}>{this.props.text}</StiledTodoText>
-            <DeleteTodo onClick={this.deleteTaskClick}>
+            <DeleteTodo onClick={this.deleteTask}>
               ✕
             </DeleteTodo>
           </StyledTaskContainer>
@@ -111,10 +111,11 @@ const StyledListItem = styled.li`
     opacity: 1;
   }
 
-@media (max-width: ${theme.windowSize.mobile}) {
+@media (max-width: ${theme.screenSize.laptop}) {
   width: 100%;
     
   ${DeleteTodo} {
+    opacity: 1;
     justify-self: flex-end;
   }
 }`;
@@ -176,8 +177,7 @@ ListItem.defaultProps = {
 
 const connectFunction = connect((state) => ({
   inputStatus: state.todo.input
-}),
-{
+}), {
   updateTask,
   deleteTask,
   changeInputStatus

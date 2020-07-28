@@ -1,5 +1,5 @@
 export default {
-  all: "#all",
-  active: "#allactive",
-  completed: "#allcompleted"
+  ALL: "#all",
+  ACTIVE: "#allactive",
+  COMPLETED: "#allcompleted"
 };

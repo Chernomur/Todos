@@ -4,10 +4,9 @@ export default {
     logo: "#ead7d7",
     task: "#fefefe",
     placeholder: "#e6e6e6",
-    link: "black",
     hoverLink: "#989fc2"
   },
-  windowSize: {
+  screenSize: {
     mobile: "380px",
     tablet: "450px",
     laptop: "1024px"

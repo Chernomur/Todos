@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import theme from "ui/styles/theme";
 import ListItem from "components/todoList/listItem/ListItem";
 
+import theme from "ui/styles/theme";
 import { TaskType } from "utils/types";
 
 const TodoList = (props) => {
@@ -38,23 +38,19 @@ const StyledTodoList = styled.div`
     list-style-type: none;
   }
 
-  @media (max-width: ${theme.windowSize.laptop}) {
-  width: 100%;
-  margin:0;
-  
-    ul {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
+  @media (max-width: ${theme.screenSize.laptop}) {
+    width: 100%;
+    margin:0;
     
-    li {
-      list-style-type: none;
-          @media (max-width: ${theme.windowSize.laptop}) {
-          width: 100%
+      ul {
+        width: 100%;
       }
-    }
-}`;
+      
+      li {
+        width: 100%
+      }
+  }
+`;
 
 TodoList.propTypes = {
   tasks: PropTypes.arrayOf(TaskType)

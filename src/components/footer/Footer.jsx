@@ -1,34 +1,34 @@
 import React from "react";
-
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import theme from "ui/styles/theme";
-
 import { connect } from "react-redux";
 import { deleteCompletedTasks } from "store/todo/actions";
-import FooterItem from "./footerItem/FooterItem.jsx";
-import constants from "../../utils/constants";
+
+import FooterItem from "components/footer/footerItem/FooterItem";
+
+import theme from "ui/styles/theme";
+import constants from "utils/constants";
 
 const Footer = (props) => {
   const itemsLeftTitle = `${props.activeCounter} item${props.activeCounter === 1 ? "" : "s"} left`;
 
   return (
     <StyledFooter>
-      <StyledItemsLeft>
+      <span>
         {itemsLeftTitle}
-      </StyledItemsLeft>
+      </span>
 
       <StyledFilter>
         <FooterItem
-          value={constants.all}
+          value={constants.ALL}
           title="All"
         />
         <FooterItem
-          value={constants.active}
+          value={constants.ACTIVE}
           title="Active"
         />
         <FooterItem
-          value={constants.completed}
+          value={constants.COMPLETED}
           title="Completed"
         />
       </StyledFilter>
@@ -43,14 +43,6 @@ const Footer = (props) => {
     </StyledFooter>
   );
 };
-
-const StyledItemsLeft = styled.span`
-  @media (max-width: ${theme.windowSize.laptop}) {
-    .itemsLeft {
-      grid-area: itemsLeft;
-    } 
-  }
-`;
 
 const StyledClearComplete = styled.button`
   outline: none;
@@ -79,8 +71,10 @@ const StyledFooter = styled.div`
   background-color: ${theme.colors.task};
   width: 550px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+  
 
-  @media (max-width: ${theme.windowSize.laptop}) { 
+  @media (max-width: ${theme.screenSize.laptop}) { 
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
@@ -90,6 +84,12 @@ const StyledFooter = styled.div`
 
     ${StyledClearComplete} {
       grid-area: clearComplete;
+    }
+
+    span{
+      .itemsLeft {
+        grid-area: itemsLeft;
+      } 
     }
 
     ${StyledFilter} {

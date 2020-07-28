@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { storage } from "../../utils";
+import { storage } from "utils";
 import {
   ADD_TASK,
   CHANGE_ALL_CHECKBOX, CHANGE_INPUT_STATUS,
@@ -34,6 +34,7 @@ const todoReducer = (state = getInitialState(), action) => {
 
     case DELETE_TASK: {
       const newTasks = state.todoData.filter((item) => item.id !== action.data);
+
       storage.tasks.set(newTasks);
 
       return {
@@ -46,11 +47,14 @@ const todoReducer = (state = getInitialState(), action) => {
       const isActive = Boolean(
         state.todoData.find((item) => (item.check === false))
       );
+
       const todoData = state.todoData.map((item) => ({
         ...item,
         check: isActive
       }));
+
       storage.tasks.set(todoData);
+
       return {
         ...state,
         todoData
@@ -68,7 +72,9 @@ const todoReducer = (state = getInitialState(), action) => {
         }
         return item;
       });
+
       storage.tasks.set(todoData);
+
       return {
         ...state,
         todoData

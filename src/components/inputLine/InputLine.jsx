@@ -1,20 +1,17 @@
 import React from "react";
+import { connect } from "react-redux";
+import styled from "styled-components";
 import PropTypes from "prop-types";
 
+import { addTask, changeAllCheckbox } from "store/todo/actions";
 import { TaskType } from "utils/types";
-import styled from "styled-components";
 import theme from "ui/styles/theme";
-import { connect } from "react-redux";
-import { addTask, changeAllCheckbox } from "../../store/todo/actions";
 
 const InputLine = (props) => {
-  const inputText = React.createRef();
-
   const addText = (e) => {
-    const text = inputText.current.value;
-    if (e.key === "Enter" && text !== "") {
-      props.addTask(text);
-      inputText.current.value = "";
+    if (e.key === "Enter" && e.target.value !== "") {
+      props.addTask(e.target.value);
+      e.target.value = "";
     }
   };
 
@@ -32,7 +29,6 @@ const InputLine = (props) => {
         placeholder="What needs to be done?"
         autoFocus
         onKeyDown={addText}
-        ref={inputText}
       />
     </StyledHeader>
   );
@@ -46,7 +42,7 @@ const StyledHeader = styled.div`
   height: 63px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
-  @media (max-width: ${theme.windowSize.laptop}) {
+  @media (max-width: ${theme.screenSize.laptop}) {
     width: 100%;
   }
 `;
