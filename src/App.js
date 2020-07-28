@@ -33,13 +33,9 @@ const App = (props) => {
     <StyledPage>
       <h1 className="pageLogo">todos</h1>
 
-      <InputLine
-        activeCounter={activeCounter}
-      />
+      <InputLine activeCounter={activeCounter} />
 
-      <TodoList
-        tasks={tasks}
-      />
+      <TodoList tasks={tasks} />
 
       <Footer
         activeCounter={activeCounter}
@@ -80,8 +76,7 @@ const connectFunction = connect(
   (state) => ({
     todoData: state.todo.todoData,
     filter: state.filter.filter
-  }),
-  null
+  })
 );
 
 export default connectFunction(App);

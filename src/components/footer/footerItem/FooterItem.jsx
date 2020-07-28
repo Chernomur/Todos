@@ -29,7 +29,7 @@ const FilterButton = styled.li`
   padding: 8px;
   margin: 5px;
   border-radius: 10px;
-  border: ${(props) => (props.selected ? "1px solid whitesmoke" : "1px solid lightgray")};
+  border: 1px solid ${(props) => (props.selected ? "whitesmoke" : "lightgray")};
   background-color: ${(props) => (props.selected ? theme.colors.mainBackground : "")};
   cursor: pointer;
   
@@ -50,9 +50,9 @@ FooterItem.defaultProps = {
   value: ""
 };
 
-const connectFunction = connect((state) => ({
-  filter: state.filter.filter
-}), {
-  changeFilter
-});
+const connectFunction = connect(
+  (state) => ({ filter: state.filter.filter }),
+  { changeFilter }
+);
+
 export default connectFunction(FooterItem);

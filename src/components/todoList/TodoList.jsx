@@ -42,13 +42,13 @@ const StyledTodoList = styled.div`
     width: 100%;
     margin:0;
     
-      ul {
-        width: 100%;
-      }
-      
-      li {
-        width: 100%
-      }
+    ul {
+      width: 100%;
+    }
+    
+    li {
+      width: 100%
+    }
   }
 `;
 

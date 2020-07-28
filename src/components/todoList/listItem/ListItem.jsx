@@ -19,7 +19,11 @@ class ListItem extends React.Component {
   }
 
   changeTaskStatus = () => {
-    this.props.updateTask({ id: this.props.id, text: this.props.text, check: !this.props.check });
+    this.props.updateTask({
+      id: this.props.id,
+      text: this.props.text,
+      check: !this.props.check
+    });
   }
 
   deleteTask = () => {
@@ -27,7 +31,10 @@ class ListItem extends React.Component {
   }
 
   checkAndChangeInput = (event) => {
-    if (event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
+    if (
+      event.target.tagName !== "INPUT" &&
+      event.target.tagName !== "BUTTON"
+    ) {
       this.props.changeInputStatus(this.props.id);
     }
   }
@@ -46,8 +53,7 @@ class ListItem extends React.Component {
     if (e.key === "Enter") {
       this.saveText(this.props.id);
       this.props.changeInputStatus(null);
-    }
-    if (e.key === "Escape") {
+    } else if (e.key === "Escape") {
       this.props.changeInputStatus(null);
       this.setState({ unsavedText: this.props.text });
     }
@@ -115,14 +121,15 @@ const StyledListItem = styled.li`
     opacity: 1;
   }
 
-@media (max-width: ${theme.screenSize.laptop}) {
-  width: 100%;
-    
-  ${DeleteTodo} {
-    opacity: 1;
-    justify-self: flex-end;
+  @media (max-width: ${theme.screenSize.laptop}) {
+    width: 100%;
+      
+    ${DeleteTodo} {
+      opacity: 1;
+      justify-self: flex-end;
+    }
   }
-}`;
+`;
 
 const StyledCheck = styled.input`
   border-radius: 100px;
@@ -179,12 +186,15 @@ ListItem.defaultProps = {
   check: false
 };
 
-const connectFunction = connect((state) => ({
-  inputStatus: state.todo.input
-}), {
-  updateTask,
-  deleteTask,
-  changeInputStatus
-});
+const connectFunction = connect(
+  (state) => ({
+    inputStatus: state.todo.input
+  }),
+  {
+    updateTask,
+    deleteTask,
+    changeInputStatus
+  }
+);
 
 export default connectFunction(ListItem);

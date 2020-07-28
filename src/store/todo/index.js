@@ -9,7 +9,10 @@ import {
 } from "./actionNames";
 
 const getInitialState = () => ({
-  todoData: storage.tasks.get()
+  todoData: storage.tasks.get(),
+  // =============================================
+  editableTaskId: null
+  // =============================================
 });
 
 const todoReducer = (state = getInitialState(), action) => {

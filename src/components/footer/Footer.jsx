@@ -2,47 +2,52 @@ import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { deleteCompletedTasks } from "store/todo/actions";
 
 import FooterItem from "components/footer/footerItem/FooterItem";
 
+import { deleteCompletedTasks } from "store/todo/actions";
 import theme from "ui/styles/theme";
 import constants from "utils/constants";
 
 const Footer = (props) => {
-  const itemsLeftTitle = `${props.activeCounter} item${props.activeCounter === 1 ? "" : "s"} left`;
+  const itemsLeftTitle =
+    `${props.activeCounter} item${props.activeCounter === 1 ? "" : "s"} left`;
 
   return (
     <StyledFooter>
-      <span>
-        {itemsLeftTitle}
-      </span>
+      <span>{itemsLeftTitle}</span>
 
       <StyledFilter>
-        <FooterItem
-          value={constants.ALL}
-          title="All"
-        />
-        <FooterItem
-          value={constants.ACTIVE}
-          title="Active"
-        />
-        <FooterItem
-          value={constants.COMPLETED}
-          title="Completed"
-        />
+        {filterButtons.map(({ title, value }) => (
+          <FooterItem
+            key={value}
+            value={value}
+            title={title}
+          />
+        ))}
       </StyledFilter>
 
       {props.completedCounter > 0 && (
-        <StyledClearComplete
-          onClick={props.deleteCompletedTasks}
-        >
+        <StyledClearComplete onClick={props.deleteCompletedTasks}>
           clear completed [{props.completedCounter}]
         </StyledClearComplete>
       )}
     </StyledFooter>
   );
 };
+
+const filterButtons = [
+  {
+    title: "All",
+    value: constants.ALL
+  }, {
+    title: "Active",
+    value: constants.ACTIVE
+  }, {
+    title: "Completed",
+    value: constants.COMPLETED
+  }
+];
 
 const StyledClearComplete = styled.button`
   outline: none;
@@ -59,9 +64,9 @@ const StyledFilter = styled.ul`
   margin-left: 0;
   padding: 0;
   
-    li {
-      display: inline;
-    }
+  li {
+    display: inline;
+  }
 `;
 
 const StyledFooter = styled.div`
@@ -84,7 +89,7 @@ const StyledFooter = styled.div`
       grid-area: clearComplete;
     }
 
-    span{
+    span {
       .itemsLeft {
         grid-area: itemsLeft;
       } 

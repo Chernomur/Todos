@@ -48,9 +48,9 @@ const StyledHeader = styled.div`
 `;
 
 const StyledInput = styled.input`
- ::placeholder {
+  ::placeholder {
     color: ${theme.colors.placeholder};
- }
+  }
  
   border: none;
   width: 90%;
@@ -75,11 +75,14 @@ InputLine.defaultProps = {
   activeCounter: 0
 };
 
-const connectFunction = connect((state) => ({
-  todoData: state.todo.todoData
-}), {
-  addTask,
-  changeAllCheckbox
-});
+const connectFunction = connect(
+  (state) => ({
+    todoData: state.todo.todoData
+  }),
+  {
+    addTask,
+    changeAllCheckbox
+  }
+);
 
 export default connectFunction(InputLine);
