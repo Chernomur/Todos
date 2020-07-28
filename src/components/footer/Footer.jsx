@@ -72,8 +72,6 @@ const StyledFooter = styled.div`
   width: 550px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
-  
-
   @media (max-width: ${theme.screenSize.laptop}) { 
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;

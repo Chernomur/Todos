@@ -51,6 +51,7 @@ const StyledInput = styled.input`
  ::placeholder {
     color: ${theme.colors.placeholder};
  }
+ 
   border: none;
   width: 90%;
   height: 90%;
