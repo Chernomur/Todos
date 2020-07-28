@@ -13,7 +13,7 @@ const Footer = (props) => {
   const itemsLeftTitle = `${props.activeCounter} item${props.activeCounter === 1 ? "" : "s"} left`;
 
   return (
-    <StyledFooter>
+    (props.activeCounter !== 0 || props.completedCounter !== 0) && (<StyledFooter>
       <span>
         {itemsLeftTitle}
       </span>
@@ -40,7 +40,7 @@ const Footer = (props) => {
           clear completed [{props.completedCounter}]
         </StyledClearComplete>
       )}
-    </StyledFooter>
+    </StyledFooter>)
   );
 };
 
