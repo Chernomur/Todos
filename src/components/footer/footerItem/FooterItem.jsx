@@ -44,6 +44,7 @@ FooterItem.propTypes = {
   value: PropTypes.string,
   changeFilter: PropTypes.func.isRequired
 };
+
 FooterItem.defaultProps = {
   title: "",
   value: ""
@@ -51,8 +52,7 @@ FooterItem.defaultProps = {
 
 const connectFunction = connect((state) => ({
   filter: state.filter.filter
-}),
-{
+}), {
   changeFilter
 });
 export default connectFunction(FooterItem);

@@ -72,15 +72,19 @@ class ListItem extends React.Component {
 
         {this.props.inputStatus !== this.props.id && (
           <StyledTaskContainer>
+
             <StyledCheck
               onChange={this.changeTaskStatus}
               type="checkbox"
               checked={this.props.check}
             />
+
             <StiledTodoText checked={this.props.check}>{this.props.text}</StiledTodoText>
+
             <DeleteTodo onClick={this.deleteTask}>
               ✕
             </DeleteTodo>
+
           </StyledTaskContainer>
         )}
       </StyledListItem>
