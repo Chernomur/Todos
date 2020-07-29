@@ -1,4 +1,4 @@
-const TASKS_STORAGE_NAME = "tasks";
+export const TASKS_STORAGE_NAME = "tasks";
 
 export const storage = {
   tasks: {

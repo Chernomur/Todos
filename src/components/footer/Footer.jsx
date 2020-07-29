@@ -17,7 +17,7 @@ const Footer = (props) => {
     <StyledFooter>
       <span>{itemsLeftTitle}</span>
 
-      <StyledFilter>
+      <ul className="StyledFilter">
         {filterButtons.map(({ title, value }) => (
           <FooterItem
             key={value}
@@ -25,12 +25,12 @@ const Footer = (props) => {
             title={title}
           />
         ))}
-      </StyledFilter>
+      </ul>
 
       {props.completedCounter > 0 && (
-        <StyledClearComplete onClick={props.deleteCompletedTasks}>
+        <button className="StyledClearComplete" onClick={props.deleteCompletedTasks}>
           clear completed [{props.completedCounter}]
-        </StyledClearComplete>
+        </button>
       )}
     </StyledFooter>
   );
@@ -49,26 +49,6 @@ const filterButtons = [
   }
 ];
 
-const StyledClearComplete = styled.button`
-  outline: none;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  
-  :hover {
-    background-color: ${theme.colors.mainBackground}
-  }
-`;
-
-const StyledFilter = styled.ul`
-  margin-left: 0;
-  padding: 0;
-  
-  li {
-    display: inline;
-  }
-`;
-
 const StyledFooter = styled.footer`
   margin: 0 auto;
   display: grid;
@@ -78,6 +58,26 @@ const StyledFooter = styled.footer`
   max-width: 550px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
+  .StyledFilter{
+    margin-left: 0;
+    padding: 0;
+  
+    li {
+      display: inline;
+    }
+  }
+  
+  .StyledClearComplete {
+    outline: none;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    
+    :hover {
+      background-color: ${theme.colors.mainBackground}
+    }
+  }
+  
   @media (max-width: ${theme.screenSize.laptop}px) { 
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
@@ -86,17 +86,15 @@ const StyledFooter = styled.footer`
       "filter filter";
     width: 100%;
 
-    ${StyledClearComplete} {
+    .StyledClearComplete {
       grid-area: clearComplete;
     }
 
     span {
-      .itemsLeft {
-        grid-area: itemsLeft;
-      } 
+      grid-area: itemsLeft;
     }
 
-    ${StyledFilter} {
+    .StyledFilter {
       grid-area: filter;
     }
   }
@@ -118,4 +116,5 @@ const connectFunction = connect(
     deleteCompletedTasks
   }
 );
+
 export default connectFunction(Footer);

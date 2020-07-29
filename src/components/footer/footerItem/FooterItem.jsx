@@ -25,7 +25,6 @@ const FooterItem = ({ filter, title, value, changeFilter }) => {
 
 const FilterButton = styled.li`
   color: ${theme.colors.link};
-  text-decoration: none;
   padding: 8px;
   margin: 5px;
   border-radius: 10px;
@@ -50,11 +49,8 @@ FooterItem.defaultProps = {
 };
 
 const connectFunction = connect(
-  (state) => ({
-    filter: state.filter.filter
-  }),
-  {
-    changeFilter
-  }
+  (state) => ({ filter: state.filter.filter }),
+  { changeFilter }
 );
+
 export default connectFunction(FooterItem);

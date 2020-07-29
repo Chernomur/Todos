@@ -36,13 +36,13 @@ class ListItem extends React.Component {
     // eslint-disable-next-line no-param-reassign
     event.target.style.opacity = 1;
     const now = new Date().getTime();
-    const timesince = now - this.latestTap;
+    const timeSince = now - this.latestTap;
 
     if (
       event.target.tagName !== "INPUT" &&
       event.target.tagName !== "BUTTON"
     ) {
-      if ((timesince < 600) && (timesince > 0)) {
+      if ((timeSince < 600) && (timeSince > 0)) {
         this.props.changeEditableTaskId(this.props.id);
       } else if (this.props.editableTaskId !== this.props.id) {
         this.props.changeEditableTaskId(null);
@@ -70,7 +70,6 @@ class ListItem extends React.Component {
       <StyledListItem
         id={this.props.id}
         onClick={this.checkAndChangeEditableTaskId}
-        on
       >
         {this.props.editableTaskId === this.props.id && (
           <StyledTodoInput

@@ -48,9 +48,6 @@ const App = (props) => {
 const StyledPage = styled.div`
   text-align: center;
 
-  input{
-  }
-
   input:focus {
     outline: none;
   }

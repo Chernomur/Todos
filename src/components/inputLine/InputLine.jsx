@@ -54,7 +54,7 @@ const StyledInput = styled.input`
   }
  
   border: none;
-  width: 90%;
+  width: 500px;
   height: 90%;
   font-size: 24px;
 `;
