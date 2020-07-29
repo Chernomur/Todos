@@ -4,7 +4,7 @@ import {
   CHANGE_ALL_CHECKBOX,
   DELETE_COMPLETED_TASKS,
   DELETE_TASK,
-  CHANGE_INPUT_STATUS
+  CHANGE_EDITABLE_TASK_ID
 } from "./actionNames";
 
 export const addTask = (data) => ({
@@ -25,7 +25,7 @@ export const changeAllCheckbox = () => ({
 export const deleteCompletedTasks = () => ({
   type: DELETE_COMPLETED_TASKS
 });
-export const changeInputStatus = (data) => ({
-  type: CHANGE_INPUT_STATUS,
+export const changeEditableTaskId = (data) => ({
+  type: CHANGE_EDITABLE_TASK_ID,
   data
 });

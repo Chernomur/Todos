@@ -2,44 +2,37 @@ import { v4 as uuidv4 } from "uuid";
 import { storage } from "utils";
 import {
   ADD_TASK,
-  CHANGE_ALL_CHECKBOX, CHANGE_INPUT_STATUS,
+  CHANGE_ALL_CHECKBOX,
+  CHANGE_EDITABLE_TASK_ID,
   DELETE_COMPLETED_TASKS,
   DELETE_TASK,
   UPDATE_TASK
 } from "./actionNames";
 
 const getInitialState = () => ({
-  todoData: storage.tasks.get()
+  todoData: storage.tasks.get(),
+  editableTaskId: null
 });
 
 const todoReducer = (state = getInitialState(), action) => {
   switch (action.type) {
     case ADD_TASK: {
-      const todoData = [
-        ...state.todoData, {
-          id: uuidv4(),
-          check: false,
-          text: action.data
-        }
-      ];
-
-      storage.tasks.set(todoData);
-
       return {
         ...state,
-        todoData,
-        input: null
+        todoData: [
+          ...state.todoData, {
+            id: uuidv4(),
+            check: false,
+            text: action.data
+          }
+        ]
       };
     }
 
     case DELETE_TASK: {
-      const newTasks = state.todoData.filter((item) => item.id !== action.data);
-
-      storage.tasks.set(newTasks);
-
       return {
         ...state,
-        todoData: newTasks
+        todoData: state.todoData.filter((item) => item.id !== action.data)
       };
     }
 
@@ -48,36 +41,28 @@ const todoReducer = (state = getInitialState(), action) => {
         state.todoData.find((item) => (item.check === false))
       );
 
-      const todoData = state.todoData.map((item) => ({
-        ...item,
-        check: isActive
-      }));
-
-      storage.tasks.set(todoData);
-
       return {
         ...state,
-        todoData
+        todoData: state.todoData.map((item) => ({
+          ...item,
+          check: isActive
+        }))
       };
     }
 
     case UPDATE_TASK: {
-      const todoData = state.todoData.map((item) => {
-        if (item.id === action.data.id) {
-          return {
-            ...item,
-            text: action.data.text,
-            check: action.data.check
-          };
-        }
-        return item;
-      });
-
-      storage.tasks.set(todoData);
-
       return {
         ...state,
-        todoData
+        todoData: state.todoData.map((item) => {
+          if (item.id === action.data.id) {
+            return {
+              ...item,
+              text: action.data.text,
+              check: action.data.check
+            };
+          }
+          return item;
+        })
       };
     }
 
@@ -90,10 +75,10 @@ const todoReducer = (state = getInitialState(), action) => {
       };
     }
 
-    case CHANGE_INPUT_STATUS:
+    case CHANGE_EDITABLE_TASK_ID:
       return {
         ...state,
-        input: action.data
+        editableTaskId: action.data
       };
 
     default:

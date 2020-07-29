@@ -5,4 +5,4 @@ export const DELETE_TASK = `${prefix}DELETE_TASK`;
 export const UPDATE_TASK = `${prefix}UPDATE_TASK`;
 export const CHANGE_ALL_CHECKBOX = `${prefix}CHANGE_ALL_CHECKBOX`;
 export const DELETE_COMPLETED_TASKS = `${prefix}DELETE_COMPLETED_TASKS`;
-export const CHANGE_INPUT_STATUS = `${prefix}CHANGE_INPUT_STATUS`;
+export const CHANGE_EDITABLE_TASK_ID = `${prefix}CHANGE_EDITABLE_TASK_ID`;

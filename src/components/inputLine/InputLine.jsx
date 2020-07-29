@@ -34,23 +34,24 @@ const InputLine = (props) => {
   );
 };
 
-const StyledHeader = styled.div`
-  padding: 0 10px 0 10px;
+const StyledHeader = styled.header`
+  margin: 0 auto;
+  padding: 0;
   display: flex;
   background-color: ${theme.colors.task};
-  width: 530px;
+  max-width: 550px;
   height: 63px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
-  @media (max-width: ${theme.screenSize.laptop}) {
+  @media (max-width: ${theme.screenSize.laptop}px) {
     width: 100%;
   }
 `;
 
 const StyledInput = styled.input`
- ::placeholder {
+  ::placeholder {
     color: ${theme.colors.placeholder};
- }
+  }
  
   border: none;
   width: 90%;
@@ -59,7 +60,8 @@ const StyledInput = styled.input`
 `;
 
 const StyledCheckAll = styled.input`
-  width: 50px;
+  min-width: 50px;
+  max-width: 50px;
   height: 50px;
   cursor: pointer;
 `;
@@ -75,11 +77,14 @@ InputLine.defaultProps = {
   activeCounter: 0
 };
 
-const connectFunction = connect((state) => ({
-  todoData: state.todo.todoData
-}), {
-  addTask,
-  changeAllCheckbox
-});
+const connectFunction = connect(
+  (state) => ({
+    todoData: state.todo.todoData
+  }),
+  {
+    addTask,
+    changeAllCheckbox
+  }
+);
 
 export default connectFunction(InputLine);

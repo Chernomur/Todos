@@ -33,13 +33,9 @@ const App = (props) => {
     <StyledPage>
       <h1 className="pageLogo">todos</h1>
 
-      <InputLine
-        activeCounter={activeCounter}
-      />
+      <InputLine activeCounter={activeCounter} />
 
-      <TodoList
-        tasks={tasks}
-      />
+      <TodoList tasks={tasks} />
 
       <Footer
         activeCounter={activeCounter}
@@ -50,12 +46,9 @@ const App = (props) => {
 };
 
 const StyledPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  @media (max-width: ${theme.screenSize.laptop}) {
-    align-items: start;
+  text-align: center;
+
+  input{
   }
 
   input:focus {
@@ -80,8 +73,7 @@ const connectFunction = connect(
   (state) => ({
     todoData: state.todo.todoData,
     filter: state.filter.filter
-  }),
-  null
+  })
 );
 
 export default connectFunction(App);

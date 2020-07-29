@@ -25,8 +25,8 @@ const TodoList = (props) => {
 };
 
 const StyledTodoList = styled.div`
-  display: flex;
-  width: 550px;
+  margin: 0 auto;
+  max-width: 550px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 
   ul {
@@ -38,17 +38,8 @@ const StyledTodoList = styled.div`
     list-style-type: none;
   }
 
-  @media (max-width: ${theme.screenSize.laptop}) {
+  @media (max-width: ${theme.screenSize.laptop}px) {
     width: 100%;
-    margin:0;
-    
-      ul {
-        width: 100%;
-      }
-      
-      li {
-        width: 100%
-      }
   }
 `;
 

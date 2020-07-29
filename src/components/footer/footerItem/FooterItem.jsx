@@ -44,15 +44,17 @@ FooterItem.propTypes = {
   value: PropTypes.string,
   changeFilter: PropTypes.func.isRequired
 };
-
 FooterItem.defaultProps = {
   title: "",
   value: ""
 };
 
-const connectFunction = connect((state) => ({
-  filter: state.filter.filter
-}), {
-  changeFilter
-});
+const connectFunction = connect(
+  (state) => ({
+    filter: state.filter.filter
+  }),
+  {
+    changeFilter
+  }
+);
 export default connectFunction(FooterItem);

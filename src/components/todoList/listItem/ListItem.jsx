@@ -3,7 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { updateTask, changeInputStatus, deleteTask } from "store/todo/actions";
+import { updateTask, changeEditableTaskId, deleteTask } from "store/todo/actions";
 import theme from "ui/styles/theme";
 
 class ListItem extends React.Component {
@@ -19,22 +19,35 @@ class ListItem extends React.Component {
   }
 
   changeTaskStatus = () => {
-    this.props.updateTask({ id: this.props.id, text: this.props.text, check: !this.props.check });
+    this.props.updateTask({
+      id: this.props.id,
+      text: this.props.text,
+      check: !this.props.check
+    });
   }
 
   deleteTask = () => {
     this.props.deleteTask(this.props.id);
   }
 
-  checkAndChangeInput = (event) => {
-    if (event.target.tagName !== "INPUT" && event.target.tagName !== "BUTTON") {
-      this.props.changeInputStatus(this.props.id);
-    }
-  }
+  latestTap;
 
-  resetToNullInputStatus = () => {
-    if (this.props.inputStatus !== this.props.id) {
-      this.props.changeInputStatus(null);
+  checkAndChangeEditableTaskId = (event) => {
+    // eslint-disable-next-line no-param-reassign
+    event.target.style.opacity = 1;
+    const now = new Date().getTime();
+    const timesince = now - this.latestTap;
+
+    if (
+      event.target.tagName !== "INPUT" &&
+      event.target.tagName !== "BUTTON"
+    ) {
+      if ((timesince < 600) && (timesince > 0)) {
+        this.props.changeEditableTaskId(this.props.id);
+      } else if (this.props.editableTaskId !== this.props.id) {
+        this.props.changeEditableTaskId(null);
+      }
+      this.latestTap = new Date().getTime();
     }
   }
 
@@ -42,13 +55,12 @@ class ListItem extends React.Component {
     this.setState({ unsavedText: event.target.value });
   }
 
-  inputConfirmation = (e) => {
+  EditableTaskConfirmation = (e) => {
     if (e.key === "Enter") {
       this.saveText(this.props.id);
-      this.props.changeInputStatus(null);
-    }
-    if (e.key === "Escape") {
-      this.props.changeInputStatus(null);
+      this.props.changeEditableTaskId(null);
+    } else if (e.key === "Escape") {
+      this.props.changeEditableTaskId(null);
       this.setState({ unsavedText: this.props.text });
     }
   }
@@ -57,33 +69,32 @@ class ListItem extends React.Component {
     return (
       <StyledListItem
         id={this.props.id}
-        onDoubleClick={this.checkAndChangeInput}
-        onTouchEnd={this.checkAndChangeInput}
-        onClick={this.resetToNullInputStatus}
+        onClick={this.checkAndChangeEditableTaskId}
+        on
       >
-        {this.props.inputStatus === this.props.id && (
+        {this.props.editableTaskId === this.props.id && (
           <StyledTodoInput
             autoFocus
-            onKeyDown={this.inputConfirmation}
+            onKeyDown={this.EditableTaskConfirmation}
             onChange={this.changeText}
             value={this.state.unsavedText}
           />
         )}
 
-        {this.props.inputStatus !== this.props.id && (
+        {this.props.editableTaskId !== this.props.id && (
           <StyledTaskContainer>
 
-            <StyledCheck
+            <StyledCheckbox
               onChange={this.changeTaskStatus}
               type="checkbox"
               checked={this.props.check}
             />
 
-            <StiledTodoText checked={this.props.check}>{this.props.text}</StiledTodoText>
+            <StiledTodoTitle checked={this.props.check}>{this.props.text}</StiledTodoTitle>
 
-            <DeleteTodo onClick={this.deleteTask}>
+            <DeleteTaskButton onClick={this.deleteTask}>
               ✕
-            </DeleteTodo>
+            </DeleteTaskButton>
 
           </StyledTaskContainer>
         )}
@@ -92,7 +103,7 @@ class ListItem extends React.Component {
   }
 }
 
-const DeleteTodo = styled.button`
+const DeleteTaskButton = styled.button`
   opacity: 0;
   transition: 0.1s;
   font-size: large;
@@ -103,30 +114,19 @@ const DeleteTodo = styled.button`
 `;
 
 const StyledListItem = styled.li`
-  padding: 0 15px 0 15px;
-  display: flex;
   background-color: ${theme.colors.task};
-  width: 520px; 
-  align-items: center;
-  justify-items: end;
+  max-width: 550px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
-  :hover ${DeleteTodo} {
+  :hover ${DeleteTaskButton} {
     opacity: 1;
   }
+`;
 
-@media (max-width: ${theme.screenSize.laptop}) {
-  width: 100%;
-    
-  ${DeleteTodo} {
-    opacity: 1;
-    justify-self: flex-end;
-  }
-}`;
-
-const StyledCheck = styled.input`
+const StyledCheckbox = styled.input`
   border-radius: 100px;
-  width: 40px;
+  min-width: 40px;
+  max-width: 40px;
   height: 60px;
   cursor: pointer;
 `;
@@ -134,25 +134,25 @@ const StyledCheck = styled.input`
 const StyledTaskContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  max-width: 550px;
   height: 90%;
 `;
 
 const StyledTodoInput = styled.input`
-  padding: 10px 0 10px;
-  margin: 8px 0 8px 40px;
+  padding: 18px 0 18px;
   display: flex;
-  justify-self: start;
   user-select: none;
   border: 1px solid blue;
-  width: 100%;
-  min-height: 90%;
+  width: 550px;
   font-size: 24px;
+  
+   @media (max-width: ${theme.screenSize.laptop}px) {
+    width: 100%;
+   }
 `;
 
-const StiledTodoText = styled.div`
+const StiledTodoTitle = styled.div`
   display: flex;
-  justify-self: start;
   align-self: center;
   text-decoration: ${({ checked }) => (checked ? "line-through" : "unset")};
   border: none;
@@ -168,10 +168,10 @@ ListItem.propTypes = {
   id: PropTypes.string.isRequired,
   text: PropTypes.string,
   check: PropTypes.bool,
-  inputStatus: PropTypes.string.isRequired,
+  editableTaskId: PropTypes.string.isRequired,
   updateTask: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
-  changeInputStatus: PropTypes.func.isRequired
+  changeEditableTaskId: PropTypes.func.isRequired
 };
 
 ListItem.defaultProps = {
@@ -179,12 +179,15 @@ ListItem.defaultProps = {
   check: false
 };
 
-const connectFunction = connect((state) => ({
-  inputStatus: state.todo.input
-}), {
-  updateTask,
-  deleteTask,
-  changeInputStatus
-});
+const connectFunction = connect(
+  (state) => ({
+    editableTaskId: state.todo.editableTaskId
+  }),
+  {
+    updateTask,
+    deleteTask,
+    changeEditableTaskId
+  }
+);
 
 export default connectFunction(ListItem);
