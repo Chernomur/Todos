@@ -43,9 +43,9 @@ class ListItem extends React.Component {
       event.target.tagName !== "BUTTON"
     ) {
       if ((timeSince < 600) && (timeSince > 0)) {
-        this.props.changeEditableTaskId(this.props.id);
+        this.props.changeEditableTaskId(this.props.id); // double click
       } else if (this.props.editableTaskId !== this.props.id) {
-        this.props.changeEditableTaskId(null);
+        this.props.changeEditableTaskId(null); // only click
       }
       this.latestTap = new Date().getTime();
     }
@@ -145,9 +145,9 @@ const StyledTodoInput = styled.input`
   width: 550px;
   font-size: 24px;
   
-   @media (max-width: ${theme.screenSize.laptop}px) {
+  @media (max-width: ${theme.screenSize.laptop}px) {
     width: 100%;
-   }
+  }
 `;
 
 const StiledTodoTitle = styled.div`
