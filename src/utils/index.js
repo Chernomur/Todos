@@ -1,17 +1,17 @@
-export const TASKS_STORAGE_NAME = "tasks";
+import constants from "./constants";
 
 export const storage = {
   tasks: {
     get: () => {
       try {
-        const tasks = JSON.parse(localStorage.getItem(TASKS_STORAGE_NAME));
+        const tasks = JSON.parse(localStorage.getItem(constants.TASKS_STORAGE_NAME));
         return tasks || [];
       } catch (error) {
         return [];
       }
     },
     set: (tasks) => {
-      localStorage.setItem(TASKS_STORAGE_NAME, JSON.stringify(tasks));
+      localStorage.setItem(constants.TASKS_STORAGE_NAME, JSON.stringify(tasks));
     }
   }
 };

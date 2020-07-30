@@ -7,7 +7,7 @@ export default {
     hoverLink: "#989fc2"
   },
   screenSize: {
-    mobile: "380",
+    mobile: "320",
     tablet: "450",
     laptop: "1024"
   }

@@ -17,7 +17,7 @@ const Footer = (props) => {
     <StyledFooter>
       <span>{itemsLeftTitle}</span>
 
-      <ul className="StyledFilter">
+      <ul className="container-filter-list">
         {filterButtons.map(({ title, value }) => (
           <FooterItem
             key={value}
@@ -28,7 +28,7 @@ const Footer = (props) => {
       </ul>
 
       {props.completedCounter > 0 && (
-        <button className="StyledClearComplete" onClick={props.deleteCompletedTasks}>
+        <button className="clear-complete-button" onClick={props.deleteCompletedTasks}>
           clear completed [{props.completedCounter}]
         </button>
       )}
@@ -58,7 +58,7 @@ const StyledFooter = styled.footer`
   max-width: 550px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   
-  .StyledFilter{
+  .container-filter-list{
     margin-left: 0;
     padding: 0;
   
@@ -67,7 +67,7 @@ const StyledFooter = styled.footer`
     }
   }
   
-  .StyledClearComplete {
+  .clear-complete-button {
     outline: none;
     border: 0;
     background: transparent;
@@ -78,7 +78,7 @@ const StyledFooter = styled.footer`
     }
   }
   
-  @media (max-width: ${theme.screenSize.laptop}px) { 
+  @media (max-width: ${theme.screenSize.tablet}px) { 
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
@@ -86,7 +86,7 @@ const StyledFooter = styled.footer`
       "filter filter";
     width: 100%;
 
-    .StyledClearComplete {
+    .clear-complete-button {
       grid-area: clearComplete;
     }
 
@@ -94,7 +94,7 @@ const StyledFooter = styled.footer`
       grid-area: itemsLeft;
     }
 
-    .StyledFilter {
+    .container-filter-list {
       grid-area: filter;
     }
   }

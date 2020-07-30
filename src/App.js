@@ -31,7 +31,7 @@ const App = (props) => {
 
   return (
     <StyledPage>
-      <h1 className="pageLogo">todos</h1>
+      <h1 className="page-logo">todos</h1>
 
       <InputLine activeCounter={activeCounter} />
 
@@ -52,7 +52,7 @@ const StyledPage = styled.div`
     outline: none;
   }
 
-  .pageLogo {
+  .page-logo {
     margin: 30px;
     font-size: 100px;
     font-style: normal;

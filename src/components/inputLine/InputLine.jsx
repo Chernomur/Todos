@@ -42,21 +42,21 @@ const StyledHeader = styled.header`
   max-width: 550px;
   height: 63px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  
-  @media (max-width: ${theme.screenSize.laptop}px) {
-    width: 100%;
-  }
+
 `;
 
 const StyledInput = styled.input`
   ::placeholder {
     color: ${theme.colors.placeholder};
   }
- 
+
   border: none;
-  width: 500px;
   height: 90%;
   font-size: 24px;
+  
+  @media (max-width: ${theme.screenSize.laptop}px) {
+    width: 100%;
+  }
 `;
 
 const StyledCheckAll = styled.input`
