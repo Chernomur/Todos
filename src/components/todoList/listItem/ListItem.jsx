@@ -138,11 +138,12 @@ const StyledTaskContainer = styled.div`
 `;
 
 const StyledTodoInput = styled.input`
+  margin-left: 45px;
   padding: 18px 0 18px;
   display: flex;
   user-select: none;
   border: 1px solid blue;
-  width: 550px;
+  width: 500px;
   font-size: 24px;
   
   @media (max-width: ${theme.screenSize.laptop}px) {
